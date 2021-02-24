@@ -5,12 +5,7 @@ import {Form, Button, Col, InputGroup} from 'react-bootstrap'
 import axios from 'axios'
 
 const API = 'http://localhost:8080'
-const axiosConfig = {
-    headers: {
-        'Content-Type': 'application/json;charset=UTF-8',
-        "Access-Control-Allow-Origin": "http://localhost:3000",
-    }
-  };
+
 class Register extends React.Component {
 
     constructor(){
@@ -44,9 +39,8 @@ class Register extends React.Component {
         console.log(this.state);
         event.preventDefault();
         if (this.validate()) {
-            let checkForExistingID = true;
             console.log("registering...")
-            axios.post(API + '/register', {
+            axios.post(API + '/users/register', {
                 userID: "test1",
                 email: "a@a.com",
                 password: "password",
@@ -58,29 +52,8 @@ class Register extends React.Component {
                 filingStatus: "single"
             }).then((response) => 
                 console.log(response.data))
-            // do {
-            //     let id = Math.floor(Math.random() * Math.floor(1000)) + 100;
-            //     let first_initial = this.state.input["fname"].substring(0,1).toLowerCase();
-            //     let second_initial = this.state.input["lname"].substring(0,1).toLowerCase();
-            //     let tempID =  first_initial + second_initial + id
-            //     axios.get(API + '/user/sg1495', {
-            //         headers: {
-            //           'Access-Control-Allow-Origin': '*',
-            //         }})
-            //     .then((response) => {
-            //         console.log(response.data["userID"])
-            //         if(response.data === ""){
-            //             checkForExistingID = true
-            //         }
-            //     });
-            //     console.log(tempID)
-            // } while( false );
+           
         }
-            
-            // axios.post(API + '/register',
-            // {
-
-            // })
     }      
     
     
