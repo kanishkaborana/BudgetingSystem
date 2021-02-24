@@ -41,15 +41,15 @@ class Register extends React.Component {
         if (this.validate()) {
             console.log("registering...")
             axios.post(API + '/users/register', {
-                userID: "test1",
-                email: "a@a.com",
-                password: "password",
-                fname: "test1",
-                lname: "test1",
+                userID: "",
+                email: this.state.input["email"],
+                password: this.state.input["password"],
+                fname: this.state.input["fname"],
+                lname: this.state.input["lname"],
                 userType: "customer",
-                dob: "1999-02-10",
-                annIncome: 1,
-                filingStatus: "single"
+                dob: this.state.input["dob"],
+                annIncome: this.state.input["annualIncome"],
+                filingStatus: this.state.input["filingStatus"]
             }).then((response) => 
                 console.log(response.data))
            
@@ -153,7 +153,7 @@ class Register extends React.Component {
                         <InputGroup.Prepend>
                         <InputGroup.Text>$</InputGroup.Text>
                         </InputGroup.Prepend>
-                        <Form.Control type = "number" min={0} name = "annualIncome" onLoad = {this.handleChange} />
+                        <Form.Control type = "number" min={0} name = "annualIncome" onChange = {this.handleChange} />
                     </InputGroup>
                     
                     </Form.Group>               
