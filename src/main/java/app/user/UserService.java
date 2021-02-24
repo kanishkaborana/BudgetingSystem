@@ -1,4 +1,4 @@
-package user;
+package app.user;
 
 import java.util.NoSuchElementException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,9 +15,14 @@ public class UserService {
 	}
 	
 	public User getUserByID(String id) {
-		User myUser = userRepo.findById(id).get();
-		System.out.println(myUser);
-		return myUser;
+		try {
+			User myUser = userRepo.findById(id).get();
+			System.out.println(myUser);
+			return myUser;
+		}
+		catch (NoSuchElementException nse) {
+			return new User();
+		}
 	}
 	
 	public void addUser(User user) {
@@ -49,13 +54,26 @@ public class UserService {
 	}
 	
 	public String register(User user) {
-		if (userRepo.findById(user.getUserID()) == null) {
-			userRepo.save(user);
-			return "Account created";
-		}
-		else {
-			return "User already exists";
-		}
+		boolean idExists = true;
+		do {
+			
+			System.out.println("hi");
+			int num = (int)(Math.random() * 900 ) + 1;
+			String fNameInitial = user.getFname().substring(0,1).toLowerCase();
+			String lNameInitial = user.getLname().substring(0,1).toLowerCase();
+			String id = fNameInitial + lNameInitial + num;
+			System.out.println(userRepo.findById(id).isEmpty());
+			if (userRepo.findById(id).isEmpty()) {
+				user.setUserID(id);
+				userRepo.save(user);
+				idExists = false;
+				return "User created";
+			}
+			
+			
+
+		} while(idExists);
+		return "User not created";
 	}
 	
 }

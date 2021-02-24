@@ -1,9 +1,15 @@
-package user;
+package app.user;
 
 public class Login {
 	
-	private String password;
+	
 	private String userID;
+	private String password;
+	
+	public Login() {
+		this.userID = "";
+		this.password = "";
+	}
 	
 	public Login(String userID, String password) {
 		super();

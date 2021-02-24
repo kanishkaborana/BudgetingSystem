@@ -1,4 +1,4 @@
-package user;
+package app.user;
 
 
 import java.sql.Date;
