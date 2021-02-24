@@ -14,7 +14,6 @@ class Login extends React.Component {
             userID: "",
             password: "",
             message: "",
-            loggedIn: false
         }
 
         this.handleChange = this.handleChange.bind(this);
@@ -39,39 +38,17 @@ class Login extends React.Component {
     }
 
     handleSubmit(event) {
-        
         event.preventDefault();
-        console.log("hello world");
-        
         
         this.setState({
             userID: this.state.userID,
             password: this.state.password,
         });
-        axios.post('http://localhost:8080/users/authenticate', {
-            userID: this.state.userID,
-            password: this.state.password
-        })
-        .then((response) => {
-            let newLoggedIn = false;
-            console.log(response);
 
-            if (response.data === "Permission Granted") {
-                console.log("logged in");
-                newLoggedIn = true;
-                console.log("poop");
-            }
-            
-            this.setState({
-                userID: this.state.userID,
-                password: this.state.password,
-                message: response.data,
-                loggedIn: newLoggedIn
-            })
-
-            
-            ;
-        });
+        this.props.Login({userID: this.state.userID, password: this.state.password})
+        
+        console.log("hello world");
+               
     }
 
     render(){

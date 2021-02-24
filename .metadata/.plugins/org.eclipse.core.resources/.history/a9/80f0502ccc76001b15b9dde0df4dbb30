@@ -1,0 +1,83 @@
+package api.user;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+@Service
+public class UserService {
+
+	@Autowired
+	private UserRepository userRepo;
+	
+	public Iterable<User> getAllUsers() {
+		return userRepo.findAll();
+	}
+	
+	public User getUserByID(String id) {
+		try {
+			User myUser = userRepo.findById(id).get();
+			System.out.println(myUser);
+			return myUser;
+		}
+		catch (NoSuchElementException nse) {
+			return new User();
+		}
+	}
+	
+	public void addUser(User user) {
+		System.out.println(user);
+		userRepo.save(user);
+		
+	}
+	
+	public void deleteUser(User user) {
+		userRepo.delete(user);
+	}
+	
+	public void deleteUserById(String id) {
+		userRepo.deleteById(id);
+	}
+	
+	public String authenticate(Login login) {
+		try {
+			User user = userRepo.findById(login.getUserID()).get();
+			if (user.getPassword().equals(login.getPassword()))
+				return "Permission Granted";
+			else
+				return "Permission Denied";
+		}
+		catch (NoSuchElementException nse) {
+			return "No such user.";
+		}
+		
+	}
+	
+	public String register(User user) {
+		boolean idExists = true;
+		do {
+			
+			System.out.println("hi");
+			int num = (int)(Math.random() * 900 ) + 1;
+			String fNameInitial = user.getFname().substring(0,1).toLowerCase();
+			String lNameInitial = user.getLname().substring(0,1).toLowerCase();
+			String id = fNameInitial + lNameInitial + num;
+			System.out.println(userRepo.findById(id).isEmpty());
+			if (userRepo.findById(id).isEmpty()) {
+				user.setUserID(id);
+				userRepo.save(user);
+				idExists = false;
+				return "User created";
+			}
+			
+			
+
+		} while(idExists);
+		return "User not created";
+	}
+	
+}

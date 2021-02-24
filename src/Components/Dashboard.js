@@ -6,15 +6,15 @@ class Dashboard extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            name : "",
-            userID : ""
+            userID: this.props.user
+
         }
     }
 
     render() {
         return (
             <div>
-                Welcome, {this.state.name}
+                Welcome, {this.state.userID}
             </div>
         )
     }
