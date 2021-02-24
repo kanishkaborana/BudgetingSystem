@@ -1,0 +1,77 @@
+@import "~bootstrap/scss/bootstrap";
+@import url('https://fonts.googleapis.com/css2?family=PT+Sans&display=swap');
+body {
+    background-color: whitesmoke;
+    font-family: 'PT Sans', sans-serif;
+}
+
+body h1 {
+    font-weight: 800;
+    text-align: center;
+    margin-bottom: 80px;
+}
+
+.input1 {
+    display: flexbox;
+    flex-direction: column;
+    width: 100%;
+}
+
+.label1 {
+    font-size: 18px;
+    font-weight: 600;
+    width: 60%;
+}
+
+.btn1 {
+    
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    margin: 20px;
+    margin-top: 80px;
+}
+
+.link1 {
+    margin-top: 20px;
+    :visited, :hover {
+        text-decoration: none;
+    }
+}
+
+#loginContainer {
+    background-color: white;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10%;
+    width: 20%;
+    height: auto;
+    padding: 1%;
+    box-shadow: 0px 7px 7px gray;
+    border-radius: 3px;
+
+    
+}
+
+#registerContainer {
+    background-color: white;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10%;
+    width: 35%;
+    height: auto;
+    padding: 1%;
+    box-shadow: 0px 7px 7px gray;
+    border-radius: 3px;
+}
+.doubleField {
+    width: 100%;
+    .input2 { 
+        display: table-cell;
+        width: 49%;
+        justify-content: space-between;
+    }
+    #rightInput {
+        float: right;
+    }
+}
