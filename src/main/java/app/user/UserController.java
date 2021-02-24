@@ -1,4 +1,4 @@
-package user;
+package app.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "http://localhost:8080")
 @RestController
 public class UserController {
 
@@ -27,19 +27,19 @@ public class UserController {
 		return userService.getUserByID(id);
 	}
 	
-	@RequestMapping(method = RequestMethod.DELETE, value = "users/delete/{id}")
+	@RequestMapping(method = RequestMethod.DELETE, value = "/users/delete/{id}")
 	public @ResponseBody String deleteUserById(@PathVariable String id){
 		userService.deleteUserById(id);
 		return "User Succesfully deleted!";
 	}
 	
-	@RequestMapping(method = RequestMethod.DELETE, value = "users/delete")
+	@RequestMapping(method = RequestMethod.DELETE, value = "/users/delete")
 	public @ResponseBody String deleteUser(@RequestBody User user){
 		userService.deleteUser(user);
 		return "User Succesfully deleted!";
 	}
 	
-	@RequestMapping(method = RequestMethod.POST, value = "users/add")
+	@PostMapping(value = "/users/add")
 	public @ResponseBody String addUser(@RequestBody User user){
 		userService.addUser(user);
 		return "User Succesfully added!";
@@ -49,7 +49,7 @@ public class UserController {
 	public @ResponseBody String authenticate(@RequestBody Login login) {
 		return userService.authenticate(login);
 	}
-	
+	@CrossOrigin(origins = "http://localhost:8080")
 	@PostMapping(value = "/users/register")
 	public @ResponseBody String register(@RequestBody User newUser) {
 		return userService.register(newUser);
