@@ -46,8 +46,6 @@ class Login extends React.Component {
         });
 
         this.props.Login({userID: this.state.userID, password: this.state.password})
-        
-        console.log("hello world");
                
     }
 
@@ -56,7 +54,7 @@ class Login extends React.Component {
             
             <div id="loginContainer">
                 <h1>Login</h1>
-                <Form className = "loginForm" onSubmit = {this.handleSubmit}>
+                <Form className = "loginForm" id = "login" onSubmit = {this.handleSubmit}>
                     <Form.Group controlid = "userIDForm" >
                         <Form.Label className = "label1">Username</Form.Label>
                         <Form.Control type = "text" name = "userID" placeholder = "Enter username" className = "input1" onChange = {this.handleChange} required/>

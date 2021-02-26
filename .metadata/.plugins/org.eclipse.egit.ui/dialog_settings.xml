@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<item key="GitSelectRepositoryPage.lastRepository" value="C:\Users\black\git\master\.git"/>
+	<list key="RepositorySelectionPage.UsedUris">
+		<item value="https://jira.cs.rutgers.edu:8445/scm/bs/master.git"/>
+	</list>
+	<list key="EGit.KnownHosts">
+		<item value="bitbucket.org"/>
+		<item value="github.com"/>
+		<item value="git.eclipse.org"/>
+		<item value="jira.cs.rutgers.edu"/>
+	</list>
+</section>
