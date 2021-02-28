@@ -7,6 +7,7 @@ import Login from './Components/Login'
 import Register from './Components/Register'
 import reportWebVitals from './reportWebVitals';
 import Dashboard from './Components/Dashboard';
+import LoadingPage from './Components/LoadingPage';
 
 ReactDOM.render(
   <BrowserRouter>
@@ -14,6 +15,7 @@ ReactDOM.render(
     <Route path = "/Login" exact component = {App}/>
     <Route path = "/Register" exact component = {Register}/>
     <Route path = "/Home" exact component = {Dashboard}/>
+    <Route path = "/Register/Success" exact render = {(props) => <LoadingPage {...props} status = "Successfully Registered" button = "/Login" buttonText = "Return to login"/>}/>
   </BrowserRouter>,
   document.getElementById('root')
 );

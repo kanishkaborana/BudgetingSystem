@@ -2,6 +2,8 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import '../Styles/Custom.scss'
 import {Form, Button, Col, InputGroup} from 'react-bootstrap'
+import DatePicker from "react-datepicker";
+import { Redirect } from 'react-router'
 import axios from 'axios'
 
 const API = 'http://localhost:8080'
@@ -11,6 +13,7 @@ class Register extends React.Component {
     constructor(){
         super();
         this.state = {
+            registered: false,
             input: {},
             errors: {}
         };
@@ -22,7 +25,7 @@ class Register extends React.Component {
         let input = this.state.input
         input["filingStatus"] = document.getElementById("filingStatus").value
         console.log(input["filingStatus"])
-        this.setState({input:input, errors:this.state.errors})
+        this.setState({registered: false, input:input, errors:this.state.errors})
     }
 
     handleChange(event) {
@@ -30,8 +33,9 @@ class Register extends React.Component {
         input[event.target.name] = event.target.value;
       
         this.setState({
-          input:input,
-          errors: this.state.errors
+            registered: false,
+            input:input,
+            errors: this.state.errors
         });
     }
 
@@ -41,7 +45,7 @@ class Register extends React.Component {
         if (this.validate()) {
             console.log("registering...")
             axios.post(API + '/users/register', {
-                userID: "",
+                userID: this.state.input.username,
                 email: this.state.input["email"],
                 password: this.state.input["password"],
                 fname: this.state.input["fname"],
@@ -50,10 +54,26 @@ class Register extends React.Component {
                 dob: this.state.input["dob"],
                 annIncome: this.state.input["annualIncome"],
                 filingStatus: this.state.input["filingStatus"]
-            }).then((response) => 
-                console.log(response.data))
-           
+            }).then((response) => {
+                console.log(response.data)
+                if (response.data === 'User exists') { 
+                    this.state.errors.usernameExists = "Username exists, try a different one."
+                
+                    this.setState( {
+                        registered: false,
+                        input: this.state.input,
+                        errors: this.state.errors
+                    } ) 
+                }
+                else {
+                    this.setState ({registered: true, input : {}, errors : {}})
+                }
+            
+            }
+            )
+            
         }
+        console.log(this.state.registered)
     }      
     
     
@@ -62,7 +82,8 @@ class Register extends React.Component {
         let valid = true;
         let input = this.state.input;
         let errors = this.state.errors;
- 
+        let dob = new Date(input["dob"])
+        let today = new Date()
         if(input["password"] !== input["confirmPassword"]){
                 errors["confirmPassword"] = "Passwords don't match.";
                 valid = false;
@@ -80,6 +101,13 @@ class Register extends React.Component {
         if(input["filingStatus"] === "" || input["filingStatus"] === null){
             errors["filingStatus"] = "Please select a filing status."
         }
+        if (dob > today){
+            errors["birthdayError"] = "Birthday cannot be a future date."
+        }
+        else {
+            errors["birthdayError"] = ""
+        }
+    
         this.setState({errors:errors});
         return valid;
     }
@@ -88,6 +116,7 @@ class Register extends React.Component {
     render() {
         return(
         <div id="registerContainer">
+            {this.state.registered && (<Redirect to="/Register/Success"/>)}
             <h1>Create an Account</h1>
             <Form onSubmit = {this.handleSubmit}>
                 <Form.Row>
@@ -116,6 +145,18 @@ class Register extends React.Component {
                     
                 </Form.Row>
 
+
+                <Form.Row>
+                    <Form.Group as={Col} controlId="formUsername">
+                        <Form.Label>Username</Form.Label>
+                        <Form.Control type = "text" name = "username" onChange = {this.handleChange} required/>
+                        <Form.Text className = "usernameExists">{this.state.errors.usernameExists}</Form.Text>
+                    </Form.Group>
+
+                    
+                </Form.Row>
+
+
                 <Form.Row>
                     <Form.Group as={Col} controlId="formPassword">
                         <Form.Label>Create a Password</Form.Label>
@@ -132,7 +173,9 @@ class Register extends React.Component {
                 <Form.Row>
                     <Form.Group as={Col} controlId="formBirthday">
                         <Form.Label>Birthday</Form.Label>
-                        <Form.Control type = "date" name = "dob" onChange = {this.handleChange} required />     
+                        
+                        <Form.Control type = "date" name = "dob"  onChange = {this.handleChange} required />
+                        <Form.Text className = "birthdayValidate">{this.state.errors.birthdayError}</Form.Text>     
                     </Form.Group>
 
                     <Form.Group as={Col} controlId="formFilingStatus">
@@ -161,6 +204,7 @@ class Register extends React.Component {
                 <Button variant="primary" type="submit">
                     Submit
                 </Button>
+                
             </Form>
 
 
