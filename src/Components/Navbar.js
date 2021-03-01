@@ -30,7 +30,10 @@ class Navbar extends React.Component {
                                 </li>
                                 <li class="nav-item active">
                                     <a class="nav-link" href="#"> Manage Expenses</a>
-                                </li>         
+                                </li>
+                                <li class="nav-item active">
+                                    <a class="nav-link" href="#"> Profile</a>
+                                </li>           
                             </ul>
                             <form class="form-inline my-2 my-lg-0">
                                 

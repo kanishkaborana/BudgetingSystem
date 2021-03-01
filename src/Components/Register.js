@@ -2,7 +2,6 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import '../Styles/Custom.scss'
 import {Form, Button, Col, InputGroup} from 'react-bootstrap'
-import DatePicker from "react-datepicker";
 import { Redirect } from 'react-router'
 import axios from 'axios'
 

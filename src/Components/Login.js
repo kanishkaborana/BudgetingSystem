@@ -12,8 +12,7 @@ class Login extends React.Component {
         super(props);
         this.state = {
             userID: "",
-            password: "",
-            message: "",
+            password: ""
         }
 
         this.handleChange = this.handleChange.bind(this);
@@ -31,8 +30,7 @@ class Login extends React.Component {
         }
         this.setState({
             userID: newUserID,
-            password: newPassword,
-            message: ""  
+            password: newPassword
         });
         
     }
@@ -42,10 +40,11 @@ class Login extends React.Component {
         
         this.setState({
             userID: this.state.userID,
-            password: this.state.password,
+            password: this.state.password
         });
 
         this.props.Login({userID: this.state.userID, password: this.state.password})
+       
                
     }
 
@@ -63,7 +62,7 @@ class Login extends React.Component {
                     <Form.Group controlid = "passForm">
                         <Form.Label className = "label1">Password</Form.Label>
                         <Form.Control type = "password" name = "password" placeholder = "Enter password" className = "input1" onChange = {this.handleChange} required/>
-                        <Form.Text className = "confirmPass">{this.state.message}</Form.Text>
+                        <Form.Text className = "confirmPass">{this.props.errors}</Form.Text>
                     </Form.Group>
                     <Form.Group className = "btn1">
                         <Button variant = "primary" type = "submit" >Login</Button>
