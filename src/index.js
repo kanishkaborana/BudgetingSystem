@@ -8,13 +8,15 @@ import Register from './Components/Register'
 import reportWebVitals from './reportWebVitals';
 import Dashboard from './Components/Dashboard';
 import LoadingPage from './Components/LoadingPage';
+import Profile from './Components/Profile'
 
 ReactDOM.render(
   <BrowserRouter>
     <Route path = "/" exact component = {App}/>
     <Route path = "/Login" exact component = {App}/>
     <Route path = "/Register" exact component = {Register}/>
-    <Route path = "/Dashboard" exact component = {App}/>
+    <Route path = "/Dashboard" exact component = {Dashboard}/>
+    <Route path = "/Profile/:username" exact component = {Profile}/>
     <Route path = "/Register/Success" exact render = {(props) => <LoadingPage {...props} status = "Successfully Registered" button = "/" buttonText = "Return to login"/>}/>
   </BrowserRouter>,
   document.getElementById('root')

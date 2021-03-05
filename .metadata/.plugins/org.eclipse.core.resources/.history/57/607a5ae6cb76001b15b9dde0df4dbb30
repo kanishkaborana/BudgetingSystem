@@ -1,5 +1,0 @@
-spring.jpa.hibernate.ddl-auto=update
-spring.datasource.url=jdbc:mysql://database-1.cstptlliqdhr.us-east-2.rds.amazonaws.com:3306/budgeting_system
-spring.datasource.username=wehatedebugging
-spring.datasource.password=cs431spring21
-server.port = 8081

@@ -1,20 +1,19 @@
 import React from 'react'
 import logoutIcon from './Images/logout-icon.svg'
 import moneyIcon from './Images/money.svg'
+import { Link } from 'react-router-dom'
+
 
 class Navbar extends React.Component {
 
     constructor(props){
         super(props)
-        this.handleSubmit = this.handleSubmit.bind(this)
     }
 
-    handleSubmit() {
-        this.props.logout()
-    }
+    
 
     render(){
-        if (this.props.loggedIn === true) {
+       
             return (
                 
                 <div>
@@ -32,24 +31,24 @@ class Navbar extends React.Component {
                                     <a class="nav-link" href="#"> Manage Expenses</a>
                                 </li>
                                 <li class="nav-item active">
-                                    <a class="nav-link" href="#"> Profile</a>
+                                    <Link to = {'/Profile/' + this.props.user}>
+                                        Profile
+                                    </Link>
                                 </li>           
                             </ul>
                             <form class="form-inline my-2 my-lg-0">
-                                
-                                <button class="btn" style = {{color: "white"}} onSubmit = {this.handleSubmit} >
-                                        Logout <span ><img src={logoutIcon} style = {{height: 30, width: 30}}></img></span>
-                                </button>
+                                <Link to = ''>
+                                    Logout <span ><img src={logoutIcon} style = {{height: 30, width: 30}}></img></span>
+                                </Link>
+                                {/* <button class="btn" style = {{color: "white"}} onSubmit = {this.handleSubmit} >
+                                        
+                                </button> */}
                             
                             </form>
                         </div>
                     </nav>
                 </div>
             )
-        }
-        else {
-            return null
-        }
         
 }
 }

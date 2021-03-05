@@ -4,11 +4,8 @@ import Dashboard from './Dashboard';
 import Navbar from './Navbar'
 import Login from './Login';
 import axios from 'axios'
-import { Link} from 'react-router-dom'
-
-
-const API = 'http://localhost:8080'
-
+import { Redirect, Link} from 'react-router-dom'
+import { API_URL} from '../config'
 
 
 function App() {
@@ -23,7 +20,7 @@ function App() {
 
   const loggedIn = credentials => {
 
-    axios.post(API + '/users/authenticate', {
+    axios.post(API_URL + '/users/authenticate', {
               userID: credentials.userID,
               password: credentials.password
           })
@@ -54,8 +51,7 @@ function App() {
 
   return (
     <div className="App">
-      <Navbar loggedIn = {(user != "")} logout = {logout}/>
-      {user === "" ? <Login Login = {loggedIn} errors = {loginErrors}/> : <Dashboard user = {user} />}
+      {user === "" ? <Login Login = {loggedIn} errors = {loginErrors}/> : <Redirect to= {{pathname: '/Dashboard', state: {user: user}}}/>}
     </div>
   );
 }

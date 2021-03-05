@@ -4,8 +4,8 @@ import '../Styles/Custom.scss'
 import {Form, Button, Col, InputGroup} from 'react-bootstrap'
 import { Redirect } from 'react-router'
 import axios from 'axios'
+import {API_URL} from '../config'
 
-const API = 'http://localhost:8080'
 
 class Register extends React.Component {
 
@@ -43,7 +43,7 @@ class Register extends React.Component {
         event.preventDefault();
         if (this.validate()) {
             console.log("registering...")
-            axios.post(API + '/users/register', {
+            axios.post(API_URL + '/users/register', {
                 userID: this.state.input.username,
                 email: this.state.input["email"],
                 password: this.state.input["password"],
@@ -200,10 +200,12 @@ class Register extends React.Component {
                     
                     </Form.Group>               
                 </Form.Row>
-                <Button variant="primary" type="submit">
-                    Submit
-                </Button>
-                
+                <Form.Group className = "btn1">
+                    <Button variant="primary" type="submit">
+                        Submit
+                    </Button>
+                    <Button href='/' variant = "primary" className = "link1">Return to Login</Button>
+                </Form.Group>
             </Form>
 
 
