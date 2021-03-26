@@ -12,6 +12,7 @@ function App() {
 
   const [user, setUser] = useState("")
   const [loginErrors, setErrors] = useState("")
+  const [userType, setUserType] = useState("")
 
   const logout = () => {
     setUser("");
@@ -28,13 +29,24 @@ function App() {
               let newLoggedIn = false;
               console.log(response.data);
 
-              if (response.data === "Permission Granted") {
-                  console.log("logged in");
-                  newLoggedIn = true;
-                  console.log("poop");
-                  setUser(credentials.userID)
-                  console.log(user)
-                  console.log(credentials.userID)
+              if (response.data === "Customer Permission Granted") {
+                setUserType("customer")
+                console.log("logged in");
+                newLoggedIn = true;
+                console.log("poop");
+                setUser(credentials.userID)
+                console.log(user)
+                console.log(credentials.userID)
+                  
+              }
+              else if (response.data === "Admin Permission Granted") {
+                setUserType("admin")
+                console.log("logged in");
+                newLoggedIn = true;
+                console.log("poop");
+                setUser(credentials.userID)
+                console.log(user)
+                console.log(credentials.userID)
                   
               }
               else
@@ -51,7 +63,7 @@ function App() {
 
   return (
     <div className="App">
-      {user === "" ? <Login Login = {loggedIn} errors = {loginErrors}/> : <Redirect to= {{pathname: '/Dashboard', state: {user: user}}}/>}
+      {user === "" ? <Login Login = {loggedIn} errors = {loginErrors}/> : <Redirect to= {{pathname: '/Dashboard', state: {user: user, userType: userType}}}/>}
     </div>
   );
 }

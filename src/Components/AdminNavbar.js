@@ -4,7 +4,7 @@ import moneyIcon from './Images/money.svg'
 import { Link } from 'react-router-dom'
 
 
-class Navbar extends React.Component {
+class AdminNavbar extends React.Component {
 
     constructor(props){
         super(props)
@@ -13,25 +13,24 @@ class Navbar extends React.Component {
     
 
     render(){
-            console.log(this.props)
+       
             return (
                 
                 <div>
                     <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
                         <Link to = {{pathname: '/Dashboard', state: {user: this.props.user, userType: this.props.userType}}}>
                             <a class="navbar-brand" style = {{color: "white"}}>Where's My Money?
-                        <img src={moneyIcon} style = {{height: 30, width: 40}}></img>
-                        </a>
+                            <img src={moneyIcon} style = {{height: 30, width: 40}}></img>
+                            </a>
                         </Link>
-                        
                     
                         <div class="collapse navbar-collapse" id="collapsibleNavId">
                             <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                                 <li class="nav-item active">
-                                    <a class="nav-link" href="#"> Add Expense </a>
+                                    <a class="nav-link" href="#"> Add User </a>
                                 </li>
                                 <li class="nav-item active">
-                                    <a class="nav-link" href="#"> Manage Expenses</a>
+                                    <a class="nav-link" href="#"> Edit User</a>
                                 </li>
                                 <li class="nav-item active">
                                     <Link to = {{pathname: '/Profile/' + this.props.user, state: {userType: this.props.userType}}}>
@@ -55,6 +54,6 @@ class Navbar extends React.Component {
         
 }
 }
-export default Navbar
+export default AdminNavbar
 
 

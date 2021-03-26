@@ -55,13 +55,25 @@ public class UserService {
 	
 	public String register(User user) {
 		if (userRepo.findById(user.getUserID()).isEmpty()) {
-//			userRepo.save(user);
+			userRepo.save(user);
 			return "User created";
 		}
 		else {
 			return "User exists";
 		}
 		
+	}
+	
+	public String update(User user) {
+		User updateUser = userRepo.findById(user.getUserID()).get();
+		updateUser.setAnnIncome(user.getAnnIncome());
+		updateUser.setFilingStatus(user.getFilingStatus());
+		updateUser.setFname(user.getFname());
+		updateUser.setLname(user.getLname());
+		updateUser.setEmail(user.getEmail());
+		updateUser.setPassword(user.getPassword());
+		userRepo.save(updateUser);
+		return "User updated";
 	}
 	
 }

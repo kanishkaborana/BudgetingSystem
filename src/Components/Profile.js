@@ -4,6 +4,7 @@ import axios from 'axios'
 import { API_URL_UPDATE_USER, API_URL_USERS } from '../config'
 import Navbar from './Navbar'
 import {Form, Button, Col, InputGroup} from 'react-bootstrap'
+import AdminNavbar from './AdminNavbar'
 
 export default class Profile extends Component {
 
@@ -11,6 +12,7 @@ export default class Profile extends Component {
         super(props)
         this.state = {
             user : {},
+            userType: "",
             errors: {}
         }
         this.handleChange = this.handleChange.bind(this);
@@ -88,7 +90,8 @@ export default class Profile extends Component {
     render() {
         return (
             <div>
-                <Navbar user = {this.state.user["userID"]}/>
+                {this.state.userType === "customer" ? 
+                    <Navbar user = {this.state.user["userID"]} userType = {this.state.userType}/> : <AdminNavbar user = {this.state.user["userID"]} userType = {this.state.userType}></AdminNavbar> }
                 <h1>Edit Profile</h1>
                 <Form onSubmit = {this.handleSubmit}>
                 <Form.Row>
