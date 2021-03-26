@@ -42,10 +42,18 @@ public class UserService {
 	public String authenticate(Login login) {
 		try {
 			User user = userRepo.findById(login.getUserID()).get();
-			if (user.getPassword().equals(login.getPassword()))
-				return "Permission Granted";
-			else
-				return "Permission Denied";
+			if(user.getUserType().equals("customer")) {
+				if (user.getPassword().equals(login.getPassword()))
+					return "Customer Permission Granted";
+				else
+					return "Customer Permission Denied";
+			}
+			else {
+				if (user.getPassword().equals(login.getPassword()))
+					return "Admin Permission Granted";
+				else
+					return "Admin Permission Denied";
+			}
 		}
 		catch (NoSuchElementException nse) {
 			return "No such user.";
@@ -54,26 +62,26 @@ public class UserService {
 	}
 	
 	public String register(User user) {
-		boolean idExists = true;
-		do {
-			
-			System.out.println("hi");
-			int num = (int)(Math.random() * 900 ) + 1;
-			String fNameInitial = user.getFname().substring(0,1).toLowerCase();
-			String lNameInitial = user.getLname().substring(0,1).toLowerCase();
-			String id = fNameInitial + lNameInitial + num;
-			System.out.println(userRepo.findById(id).isEmpty());
-			if (userRepo.findById(id).isEmpty()) {
-				user.setUserID(id);
-				userRepo.save(user);
-				idExists = false;
-				return "User created";
-			}
-			
-			
-
-		} while(idExists);
-		return "User not created";
+		if (userRepo.findById(user.getUserID()).isEmpty()) {
+			userRepo.save(user);
+			return "User created";
+		}
+		else {
+			return "User exists";
+		}
+		
+	}
+	
+	public String update(User user) {
+		User updateUser = userRepo.findById(user.getUserID()).get();
+		updateUser.setAnnIncome(user.getAnnIncome());
+		updateUser.setFilingStatus(user.getFilingStatus());
+		updateUser.setFname(user.getFname());
+		updateUser.setLname(user.getLname());
+		updateUser.setEmail(user.getEmail());
+		updateUser.setPassword(user.getPassword());
+		userRepo.save(updateUser);
+		return "User updated";
 	}
 	
 }
