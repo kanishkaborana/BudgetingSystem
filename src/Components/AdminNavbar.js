@@ -1,6 +1,8 @@
 import React from 'react'
 import logoutIcon from './Images/logout-icon.svg'
 import moneyIcon from './Images/money.svg'
+import plusIcon from './Images/plus-icon.svg'
+import profileIcon from './Images/profile-icon.svg'
 import { Link } from 'react-router-dom'
 
 
@@ -27,20 +29,25 @@ class AdminNavbar extends React.Component {
                         <div class="collapse navbar-collapse" id="collapsibleNavId">
                             <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                                 <li class="nav-item active">
-                                    <a class="nav-link" href="#"> Add User </a>
-                                </li>
-                                <li class="nav-item active">
-                                    <a class="nav-link" href="#"> Edit User</a>
+                                    <Link to = {{pathname: '/AddUser/', state: {userType: this.props.userType}}}>
+                                        <a class = 'nav-link' style = {{color: "white"}}>
+                                        Add User <span ><img src={plusIcon} style = {{height: 30, width: 30}}></img></span>
+                                        </a>
+                                    </Link>
                                 </li>
                                 <li class="nav-item active">
                                     <Link to = {{pathname: '/Profile/' + this.props.user, state: {userType: this.props.userType}}}>
-                                        Profile
+                                        <a class = 'nav-link' style = {{color: "white"}}>
+                                        Profile <span ><img src={profileIcon} style = {{height: 30, width: 30}}></img></span>
+                                        </a>
                                     </Link>
                                 </li>           
                             </ul>
                             <form class="form-inline my-2 my-lg-0">
                                 <Link to = ''>
+                                    <a class = 'nav-item active' style = {{color: "white"}}>
                                     Logout <span ><img src={logoutIcon} style = {{height: 30, width: 30}}></img></span>
+                                    </a>
                                 </Link>
                                 {/* <button class="btn" style = {{color: "white"}} onSubmit = {this.handleSubmit} >
                                         

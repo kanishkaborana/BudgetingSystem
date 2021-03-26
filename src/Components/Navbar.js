@@ -1,6 +1,8 @@
 import React from 'react'
 import logoutIcon from './Images/logout-icon.svg'
 import moneyIcon from './Images/money.svg'
+import plusIcon from './Images/plus-icon.svg'
+import profileIcon from './Images/profile-icon.svg'
 import { Link } from 'react-router-dom'
 
 
@@ -34,8 +36,10 @@ class Navbar extends React.Component {
                                     <a class="nav-link" href="#"> Manage Expenses</a>
                                 </li>
                                 <li class="nav-item active">
-                                    <Link to = {{pathname: '/Profile/' + this.props.user, state: {userType: this.props.userType}}}>
-                                        Profile
+                                <Link to = {{pathname: '/Profile/' + this.props.user, state: {userType: this.props.userType}}}>
+                                        <a class = 'nav-link' style = {{color: "white"}}>
+                                        Profile <span ><img src={profileIcon} style = {{height: 30, width: 30}}></img></span>
+                                        </a>
                                     </Link>
                                 </li>           
                             </ul>
