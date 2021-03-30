@@ -29,7 +29,7 @@ class AdminNavbar extends React.Component {
                         <div class="collapse navbar-collapse" id="collapsibleNavId">
                             <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                                 <li class="nav-item active">
-                                    <Link to = {{pathname: '/AddUser/', state: {userType: this.props.userType}}}>
+                                    <Link to = {{pathname: '/AddUser/', state: {user: this.props.user, userType: this.props.userType}}}>
                                         <a class = 'nav-link' style = {{color: "white"}}>
                                         Add User <span ><img src={plusIcon} style = {{height: 30, width: 30}}></img></span>
                                         </a>

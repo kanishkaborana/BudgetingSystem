@@ -4,6 +4,7 @@ import { Route, BrowserRouter } from 'react-router-dom'
 import './index.css';
 import App from './Components/App';
 import Login from './Components/Login'
+import AddUser from './Components/AddUser'
 import Register from './Components/Register'
 import reportWebVitals from './reportWebVitals';
 import Dashboard from './Components/Dashboard';
@@ -13,6 +14,7 @@ import Profile from './Components/Profile'
 ReactDOM.render(
   <BrowserRouter>
     <Route path = "/" exact component = {App}/>
+    <Route path = "/AddUser" exact component = {AddUser}/>
     <Route path = "/Login" exact component = {App}/>
     <Route path = "/Register" exact component = {Register}/>
     <Route path = "/Dashboard" exact component = {Dashboard}/>

@@ -54,5 +54,7 @@ public class UserController {
 	public @ResponseBody String register(@RequestBody User newUser) {
 		return userService.register(newUser);
 	}
+
+
 	
 }
