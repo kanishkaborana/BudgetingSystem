@@ -10,10 +10,12 @@ import reportWebVitals from './reportWebVitals';
 import Dashboard from './Components/Dashboard';
 import LoadingPage from './Components/LoadingPage';
 import Profile from './Components/Profile'
+import AddExpense from './Components/AddExpense'
 
 ReactDOM.render(
   <BrowserRouter>
     <Route path = "/" exact component = {App}/>
+    <Route path = "/AddExpense" exact component = {AddExpense}/>
     <Route path = "/AddUser" exact component = {AddUser}/>
     <Route path = "/Login" exact component = {App}/>
     <Route path = "/Register" exact component = {Register}/>

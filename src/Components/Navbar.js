@@ -29,9 +29,11 @@ class Navbar extends React.Component {
                     
                         <div class="collapse navbar-collapse" id="collapsibleNavId">
                             <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-                                <li class="nav-item active">
-                                    <a class="nav-link" href="#"> Add Expense </a>
-                                </li>
+                            <Link to = {{pathname: '/AddExpense', state: {user: this.props.user, userType: this.props.userType}}}>
+                                <a class="navbar-brand" style = {{color: "white"}}>Add Expense
+                                <img src={plusIcon} style = {{height: 30, width: 40}}></img>
+                                </a>
+                            </Link>
                                 <li class="nav-item active">
                                     <a class="nav-link" href="#"> Manage Expenses</a>
                                 </li>
