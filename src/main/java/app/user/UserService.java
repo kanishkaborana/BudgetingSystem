@@ -62,7 +62,7 @@ public class UserService {
 	}
 	
 	public String register(User user) {
-		if (userRepo.findById(user.getUserID()).isEmpty()) {
+		if (!userRepo.findById(user.getUserID()).isPresent()) {
 			userRepo.save(user);
 			return "User created";
 		}

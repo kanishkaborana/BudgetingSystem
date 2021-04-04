@@ -13,8 +13,6 @@ class AddExpense extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            userID: this.props.location.state["user"],
-            userType: this.props.location.state["userType"],
             added: false,
             input: {},
             errors: {}
@@ -47,7 +45,7 @@ class AddExpense extends React.Component {
         event.preventDefault();
         if (this.validate()) {
             console.log("adding...")
-            axios.post(API_URL + '/users/register', {
+            axios.post(API_URL + '/expenses/added', {
                 userID: this.state.input.username,
                 expenseTitle: this.state.input["expenseTitle"],
                 dateAdded: this.state.input["dateAdded"],
@@ -55,7 +53,7 @@ class AddExpense extends React.Component {
                 category: this.state.input["category"]
             }).then((response) => {
                 console.log(response.data)
-                this.setState ({registered: true, input : {}, errors : {}})
+                this.setState ({added: true, input : {}, errors : {}})
                 }
             )
         }
@@ -94,10 +92,9 @@ class AddExpense extends React.Component {
             <div>
                 <Navbar user = {this.state.userID} userType = {this.state.userType}/>
                 <div id="registerContainer">
-                    
+                {this.state.added && (<Redirect to="/AddExpense/Success"/>)}
                     <h1>Add an Expense</h1>
-                    <Form>
-
+                    <Form onSubmit = {this.handleSubmit}>
                         <Form.Row>
                             <Form.Group as={Col} controlId="formExpenseTitle">
                                 <Form.Label>Expense Title</Form.Label>
@@ -141,7 +138,6 @@ class AddExpense extends React.Component {
                             <Button variant="primary" type="submit">
                                 Submit
                             </Button>
-                            <Button href='/' variant = "primary" className = "link1">Return to Login</Button>
                         </Form.Group>
 
                     </Form>
