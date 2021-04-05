@@ -14,7 +14,7 @@ class AddExpense extends React.Component {
         super(props);
         this.state = {
             added: false,
-            input: {},
+            input: {userID: this.props.location.state["user"]},
             errors: {}
         };
         this.handleChange = this.handleChange.bind(this);
@@ -46,14 +46,17 @@ class AddExpense extends React.Component {
         if (this.validate()) {
             console.log("adding...")
             axios.post(API_URL + '/expenses/added', {
-                userID: this.state.input.username,
-                expenseTitle: this.state.input["expenseTitle"],
-                dateAdded: this.state.input["dateAdded"],
+                userID: this.state.input.userID,
                 amount: this.state.input["amount"],
-                category: this.state.input["category"]
+                category: this.state.input["category"],
+                dateAdded: this.state.input["dateAdded"],
+                expenseTitle: this.state.input["expenseTitle"],
+                
+                
+                
             }).then((response) => {
                 console.log(response.data)
-                this.setState ({added: true, input : {}, errors : {}})
+                this.setState ({added: true, errors : {output: response.data}})
                 }
             )
         }
@@ -90,9 +93,9 @@ class AddExpense extends React.Component {
     render() {
         return(
             <div>
-                <Navbar user = {this.state.userID} userType = {this.state.userType}/>
+                <Navbar user = {this.props.location.state["user"]} userType = {this.props.location.state["userType"]}/>
                 <div id="registerContainer">
-                {this.state.added && (<Redirect to="/AddExpense/Success"/>)}
+                {/* {this.state.added && (<Redirect to="/AddExpense/Success"/>)} */}
                     <h1>Add an Expense</h1>
                     <Form onSubmit = {this.handleSubmit}>
                         <Form.Row>
@@ -116,7 +119,7 @@ class AddExpense extends React.Component {
                                 <InputGroup.Prepend>
                                 <InputGroup.Text>$</InputGroup.Text>
                                 </InputGroup.Prepend>
-                                <Form.Control type = "number" min={0} name = "annualIncome" onChange = {this.handleChange} />
+                                <Form.Control type = "number" min={0} name = "amount" onChange = {this.handleChange} />
                             </InputGroup>
                             </Form.Group>    
                         </Form.Row>
@@ -138,6 +141,7 @@ class AddExpense extends React.Component {
                             <Button variant="primary" type="submit">
                                 Submit
                             </Button>
+                            <Form.Text className = "output">{this.state.errors["output"]}</Form.Text>
                         </Form.Group>
 
                     </Form>
