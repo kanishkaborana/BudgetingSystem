@@ -3,8 +3,9 @@ import ReactDOM from 'react-dom'
 import Navbar from './Navbar'
 import AdminNavbar from './AdminNavbar'
 import axios from 'axios'
-import {API_URL_USERS } from '../config'
+import {API_URL_USERS, API_URL_USER_DELETE } from '../config'
 import {Table} from 'react-bootstrap'
+import {Link, Redirect} from 'react-router-dom'
 
 class Dashboard extends React.Component {
 
@@ -27,13 +28,26 @@ class Dashboard extends React.Component {
         })
     }
 
-    handleDelete() {
-        
+    handleDelete(index) {
+        let userID = document.getElementById("userID" + index).innerHTML
+        axios.delete(API_URL_USER_DELETE + '/' + userID)
+        .then((response) => {
+            //update customers table
+            axios.get(API_URL_USERS)
+                .then((response) => {
+                this.setState({customers: response.data})
+                console.log((this.state.customers[0]))
+            })
+        })
+    }
+
+    handleEdit(index) {
+        let userID = document.getElementById("userID" + index).innerHTML
+        console.log("editting " + userID);
+        this.props.history.push({pathname: '/EditUser', state: {admin: this.state.userID, user: userID}})
     }
 
     getCustomersTable() {
-        console.log((this.state.customers[0]).dob)
-            //console.log("hi" + (this.state.customers[0])['userID'])
             return (
                 <div>
                     <Table striped bordered hover size="sm">
@@ -48,16 +62,16 @@ class Dashboard extends React.Component {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {(this.state.customers).map(element => {
-                                        console.log(element.userID)
+                                    {(this.state.customers).map((element, index) => {
+                                        console.log(index)
                                         return(
-                                        <tr>
-                                            <td>{element.userID}</td>
+                                        <tr id = {"row" + index}>
+                                            <td id = {"userID" + index}>{element.userID}</td>
                                             <td>{element.email}</td>
                                             <td>{element.fname}</td>
                                             <td>{element.lname}</td>
-                                            <td><button type="button" name="" id="" class="btn btn-primary" btn-lg btn-block>Edit</button></td>
-                                            <td><button type="button" name="" id="" class="btn btn-primary" btn-lg btn-block onClick = {this.handleDelete()}>Delete</button></td>
+                                            <td><button type="button" name="" id="" class="btn btn-primary" btn-lg btn-block onClick = {() => this.handleEdit(index)}>Edit</button></td>
+                                            <td><button type="button" name="" id="" class="btn btn-primary" btn-lg btn-block onClick = {() => this.handleDelete(index)}>Delete</button></td>
                                         </tr>
                                         )
                                     })}

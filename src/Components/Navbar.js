@@ -30,7 +30,7 @@ class Navbar extends React.Component {
                         <div class="collapse navbar-collapse" id="collapsibleNavId">
                             <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                             <Link to = {{pathname: '/AddExpense', state: {user: this.props.user, userType: this.props.userType}}}>
-                                <a class="navbar-brand" style = {{color: "white"}}>Add Expense
+                                <a class="nav-link" style = {{color: "white"}}>Add Expense
                                 <img src={plusIcon} style = {{height: 30, width: 40}}></img>
                                 </a>
                             </Link>
@@ -47,11 +47,10 @@ class Navbar extends React.Component {
                             </ul>
                             <form class="form-inline my-2 my-lg-0">
                                 <Link to = ''>
+                                    <a class = 'nav-item active' style = {{color: "white"}}>
                                     Logout <span ><img src={logoutIcon} style = {{height: 30, width: 30}}></img></span>
+                                    </a>
                                 </Link>
-                                {/* <button class="btn" style = {{color: "white"}} onSubmit = {this.handleSubmit} >
-                                        
-                                </button> */}
                             
                             </form>
                         </div>

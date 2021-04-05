@@ -11,6 +11,7 @@ import Dashboard from './Components/Dashboard';
 import LoadingPage from './Components/LoadingPage';
 import Profile from './Components/Profile'
 import AddExpense from './Components/AddExpense'
+import EditUser from './Components/EditUser'
 
 ReactDOM.render(
   <BrowserRouter>
@@ -21,6 +22,7 @@ ReactDOM.render(
     <Route path = "/Register" exact component = {Register}/>
     <Route path = "/Dashboard" exact component = {Dashboard}/>
     <Route path = "/Profile/:username" exact component = {Profile}/>
+    <Route path = "/EditUser" exact component = {EditUser}/>
     <Route path = "/Register/Success" exact render = {(props) => <LoadingPage {...props} status = "Successfully Registered" button = "/" buttonText = "Return to login"/>}/>
   </BrowserRouter>,
   document.getElementById('root')
