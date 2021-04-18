@@ -3,6 +3,7 @@ package app.expense;
 import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -26,6 +27,11 @@ public class ExpenseService {
 		}
 	}
 	
+
+	public Iterable<Expense> getExpensesByUserID(String userID) {
+		return expenseRepo.getExpensesByUserID(userID);
+	}
+
 	public void addExpense(Expense expense) {
 		System.out.println(expense);
 		expenseRepo.save(expense);

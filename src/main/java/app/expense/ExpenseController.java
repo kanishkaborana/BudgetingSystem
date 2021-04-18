@@ -26,7 +26,13 @@ public class ExpenseController {
 	public Expense getExpenseById(@PathVariable Integer id) {
 		return expenseService.getExpenseByID(id);
 	}
-	
+
+	@RequestMapping("/expense/{userID}")
+	public Iterable<Expense> getExpenseByUserID(@PathVariable String userID) {
+		System.out.println(expenseService.getExpensesByUserID(userID));
+		return expenseService.getExpensesByUserID(userID);
+	}
+		
 	@RequestMapping(method = RequestMethod.DELETE, value = "/expenses/delete/{id}")
 	public @ResponseBody String deleteExpenseById(@PathVariable Integer id){
 		expenseService.deleteExpenseById(id);

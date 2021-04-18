@@ -92,78 +92,78 @@ export default class Profile extends Component {
         return valid;
     }
 
-    // printTaxBracket(){
-    //     //Based on 2019 tax data
-    //     let tax_bracket;
-    //     let user = this.state.user
-    //     if(user["filingStatus"]="Single"){
-    //         if(user["annIncome"]<=9700){
-    //             tax_bracket=0.10;
-    //         }else if(user["annIncome"]<=39475){
-    //             tax_bracket=0.12;
-    //         }else if(user["annIncome"]<=84200){
-    //             tax_bracket=0.22;
-    //         }else if(user["annIncome"]<=160725){
-    //             tax_bracket=0.24;
-    //         }else if(user["annIncome"]<=204100){
-    //             tax_bracket=0.32;
-    //         }else if(user["annIncome"]<=520300){
-    //             tax_bracket=0.35;
-    //         }else{
-    //             tax_bracket=0.37;
-    //         }
-    //     }else if(user["filingStatus"]="Married filing jointly"){
-    //         if(user["annIncome"]<=19400){
-    //             tax_bracket=0.10;
-    //         }else if(user["annIncome"]<=78950){
-    //             tax_bracket=0.12;
-    //         }else if(user["annIncome"]<=168400){
-    //             tax_bracket=0.22;
-    //         }else if(user["annIncome"]<=321450){
-    //             tax_bracket=0.24;
-    //         }else if(user["annIncome"]<=408200){
-    //             tax_bracket=0.32;
-    //         }else if(user["annIncome"]<=612350){
-    //             tax_bracket=0.35;
-    //         }else{
-    //             tax_bracket=0.37;
-    //         }
-    //     }else if(user["filingStatus"]="Married filing separately"){
-    //         if(user["annIncome"]<=9700){
-    //             tax_bracket=0.10;
-    //         }else if(user["annIncome"]<=39475){
-    //             tax_bracket=0.12;
-    //         }else if(user["annIncome"]<=84200){
-    //             tax_bracket=0.22;
-    //         }else if(user["annIncome"]<=160725){
-    //             tax_bracket=0.24;
-    //         }else if(user["annIncome"]<=204100){
-    //             tax_bracket=0.32;
-    //         }else if(user["annIncome"]<=306175){
-    //             tax_bracket=0.35;
-    //         }else{
-    //             tax_bracket=0.37;
-    //         }
-    //     }else{
-    //         if(user["annIncome"]<=13850){
-    //             tax_bracket=0.10;
-    //         }else if(user["annIncome"]<=52850){
-    //             tax_bracket=0.12;
-    //         }else if(user["annIncome"]<=84200){
-    //             tax_bracket=0.22;
-    //         }else if(user["annIncome"]<=160700){
-    //             tax_bracket=0.24;
-    //         }else if(user["annIncome"]<=204100){
-    //             tax_bracket=0.32;
-    //         }else if(user["annIncome"]<=510300){
-    //             tax_bracket=0.35;
-    //         }else{
-    //             tax_bracket=0.37;
-    //         }
-    //     }
-    //     tax_brack_statement="Your tax bracket is " + tax_bracket;
-    //     alert(tax_brack_statement);
-    // }
+    printTaxBracket(){
+        //Based on 2019 tax data
+        let tax_bracket;
+        let user = this.state.user
+        if(user["filingStatus"]="Single"){
+            if(user["annIncome"]<=9700){
+                tax_bracket=0.10;
+            }else if(user["annIncome"]<=39475){
+                tax_bracket=0.12;
+            }else if(user["annIncome"]<=84200){
+                tax_bracket=0.22;
+            }else if(user["annIncome"]<=160725){
+                tax_bracket=0.24;
+            }else if(user["annIncome"]<=204100){
+                tax_bracket=0.32;
+            }else if(user["annIncome"]<=520300){
+                tax_bracket=0.35;
+            }else{
+                tax_bracket=0.37;
+            }
+        }else if(user["filingStatus"]="Married filing jointly"){
+            if(user["annIncome"]<=19400){
+                tax_bracket=0.10;
+            }else if(user["annIncome"]<=78950){
+                tax_bracket=0.12;
+            }else if(user["annIncome"]<=168400){
+                tax_bracket=0.22;
+            }else if(user["annIncome"]<=321450){
+                tax_bracket=0.24;
+            }else if(user["annIncome"]<=408200){
+                tax_bracket=0.32;
+            }else if(user["annIncome"]<=612350){
+                tax_bracket=0.35;
+            }else{
+                tax_bracket=0.37;
+            }
+        }else if(user["filingStatus"]="Married filing separately"){
+            if(user["annIncome"]<=9700){
+                tax_bracket=0.10;
+            }else if(user["annIncome"]<=39475){
+                tax_bracket=0.12;
+            }else if(user["annIncome"]<=84200){
+                tax_bracket=0.22;
+            }else if(user["annIncome"]<=160725){
+                tax_bracket=0.24;
+            }else if(user["annIncome"]<=204100){
+                tax_bracket=0.32;
+            }else if(user["annIncome"]<=306175){
+                tax_bracket=0.35;
+            }else{
+                tax_bracket=0.37;
+            }
+        }else{
+            if(user["annIncome"]<=13850){
+                tax_bracket=0.10;
+            }else if(user["annIncome"]<=52850){
+                tax_bracket=0.12;
+            }else if(user["annIncome"]<=84200){
+                tax_bracket=0.22;
+            }else if(user["annIncome"]<=160700){
+                tax_bracket=0.24;
+            }else if(user["annIncome"]<=204100){
+                tax_bracket=0.32;
+            }else if(user["annIncome"]<=510300){
+                tax_bracket=0.35;
+            }else{
+                tax_bracket=0.37;
+            }
+        }
+        let tax_brack_statement="Your tax bracket is " + tax_bracket;
+        alert(tax_brack_statement);
+    }
 
     render() {
         return (
