@@ -6,8 +6,7 @@ import axios from 'axios'
 import {API_URL_USERS, API_URL_USER_DELETE, API_URL } from '../config'
 import {Table} from 'react-bootstrap'
 import {Link, Redirect} from 'react-router-dom'
-import { PieChart} from 'react-minimal-pie-chart'
-import FullOption from './FullOption'
+import { Chart } from "react-google-charts";
 
 class Dashboard extends React.Component {
 
@@ -102,47 +101,89 @@ class Dashboard extends React.Component {
 
     updatePieData() {
         console.log("updating pie data...")
-        let array = [];
+        let array = [['Expense', 'Amount']];
         let color = '#FA3005' //RED
         this.state.expenses.forEach(element => {
-            switch(element.category) {
-                case 'Food':
-                    color = '#05B3FA' //BLUE
-                    break;
-                case 'Rent':
-                    color = '#FA9605' //ORANGE
-                    break;
-                case 'Gas':
-                    color = '#FA05DC' //PINK
-                    break;
-                case 'Utility':
-                    color = '#14FA05' //GREEN
-                    break;
-            }
-            array.push({title: element.expenseTitle, value: element.amount, color: color})
+            array.push([element.expenseTitle, element.amount])
         });
         return array
     }
+    
+    updateCategoricalPieData() {
+        let rentTotal = 0;
+        let entertainmentTotal = 0;
+        let utilityTotal = 0;
+        let foodTotal = 0;
+        let businessTotal = 0;
+        let groceriesTotal = 0;
+        let otherTotal = 0;
+        this.state.expenses.forEach(element => {
+            console.log(element)
+            switch(element.category) {
+                case "Food":
+                    foodTotal += element.amount
+                    break;
+                case "Rent/Mortgage":
+                    rentTotal += element.amount
+                    break;
+                case "Entertainment":
+                    entertainmentTotal += element.amount
+                    break;
+                case "Utility":
+                    utilityTotal += element.amount
+                    break;
+                case "Business":
+                    businessTotal += element.amount;
+                    break;
+                case "Groceries":
+                    groceriesTotal += element.amount
+                    break;
+                default:
+                    otherTotal += element.amount
+            }
+        });
+        let arr = [['Category', 'Amount'], 
+            foodTotal == 0 ? ['', ''] : ['Food', foodTotal],
+            rentTotal == 0 ? ['', ''] : ['Rent/Mortgage', rentTotal],
+            entertainmentTotal == 0 ? ['', ''] : ['Entertainment', entertainmentTotal],
+            utilityTotal == 0 ? ['', ''] : ['Utility', utilityTotal],
+            groceriesTotal == 0 ? ['', ''] : ['Groceries', groceriesTotal],
+            businessTotal == 0 ? ['', ''] : ['Business', businessTotal],
+            otherTotal == 0 ? ['', ''] : ['Other', otherTotal] ];
+        console.log(arr)
+        return arr;
+    }
 
     getExpenseGraph() {
-        let total = 0;
-        let gasTotal = 0;
-        let foodTotal = 0;
-        let dataArray = this.updatePieData();
-        console.log("data array:")
-        console.log(dataArray)
-
-        this.state.expenses.forEach(element => {
-            total += element.amount
-        });
 
         if(this.state.expenses.length != 0) {
             return (
-                <FullOption 
-                    data = {dataArray}
-                    radius = {15} 
-                    data = {dataArray}
-                /> 
+                <Chart
+                    width={'1000px'}
+                    height={'700px'}
+                    chartType="PieChart"
+                    loader={<div>Loading Expense Chart</div>}
+                    data={this.updatePieData()}
+                    options={{
+                        title: 'Expenses',
+                        'backgroundColor': 'transparent',
+                        pieHole: 0.4,
+                        legend: {
+                            position: "bottom",
+                            textStyle: {
+                              color: "233238",
+                              fontSize: 14
+                            }
+                          },
+                          chartArea: {
+                            left: 100,
+                            top: 100,
+                            width: "90%",
+                            height: "80%"
+                          },
+                    }}
+                    rootProps={{ 'data-testid': '3' }}
+                />
             )
         }
         else {
@@ -151,6 +192,46 @@ class Dashboard extends React.Component {
             )
         }
     }
+
+    getCategoricalPieGraph() {
+
+        if(this.state.expenses.length != 0) {
+            return (
+                <Chart
+                    width={'1000px'}
+                    height={'700px'}
+                    chartType="PieChart"
+                    loader={<div>Loading Expense Chart</div>}
+                    data={this.updateCategoricalPieData()}
+                    options={{
+                        title: 'Expenses By Category',
+                        'backgroundColor': 'transparent',
+                        pieHole: 0.4,
+                        legend: {
+                            position: "bottom",
+                            textStyle: {
+                                color: "233238",
+                                fontSize: 14
+                            }
+                            },
+                        chartArea: {
+                            left: 100,
+                            top: 100,
+                            width: "90%",
+                            height: "80%"
+                        },
+                    }}
+                    rootProps={{ 'data-testid': '3' }}
+                />
+            )
+        }
+        else {
+            return (
+                <h1>No Expenses</h1>
+            )
+        }    
+    }
+    
 
     getMonthlyReport() {
         return (
@@ -250,9 +331,11 @@ class Dashboard extends React.Component {
         const table = this.getCustomersTable()
         const pieGraph = this.getExpenseGraph()
         const monthlyReport = this.getMonthlyReport()
+        const categoricalPieGraph = this.getCategoricalPieGraph()
         const date = new Date()
         const monthNames = ["January", "February", "March", "April", "May", "June",
         "July", "August", "September", "October", "November", "December"];
+
         return (
             <div>
                 
@@ -261,8 +344,9 @@ class Dashboard extends React.Component {
                         <Navbar user = {this.state.userID} userType = {this.state.userType}/>
                         <h2>Welcome, {this.state.userID}</h2>
                         <br></br>
-                        <h1>{monthNames[date.getMonth()]}'s Expense Chart</h1>
+                        <h1>{monthNames[date.getMonth()]}'s Expense Chart</h1><hr/>
                         {pieGraph}
+                        {categoricalPieGraph}
                         {monthlyReport}
                         {this.printTaxBracket()}
                     </div>

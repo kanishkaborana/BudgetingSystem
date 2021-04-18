@@ -129,9 +129,13 @@ class AddExpense extends React.Component {
                             <Form.Label>Category</Form.Label>
                             <Form.Control as="select"  name = "category" id = "category" onChange = {this.handleChange} required>
                                 <option>Food</option>
-                                <option>Rent</option>
+                                <option>Groceries</option>
+                                <option>Rent/Mortgage</option>
                                 <option>Gas</option>
+                                <option>Entertainment</option>
                                 <option>Utility</option>
+                                <option>Business</option>
+                                <option>Other</option>
                             </Form.Control>
                             <Form.Text>{this.state.errors.category}</Form.Text>
                             </Form.Group>          

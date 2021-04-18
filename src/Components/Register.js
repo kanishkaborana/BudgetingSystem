@@ -99,9 +99,11 @@ class Register extends React.Component {
         }
         if(input["filingStatus"] === "" || input["filingStatus"] === null){
             errors["filingStatus"] = "Please select a filing status."
+            valid = false;
         }
         if (dob > today){
             errors["birthdayError"] = "Birthday cannot be a future date."
+            valid = false;
         }
         else {
             errors["birthdayError"] = ""
