@@ -23,7 +23,6 @@ class Register extends React.Component {
     componentDidMount () {
         let input = this.state.input
         input["filingStatus"] = document.getElementById("filingStatus").value
-        console.log(input["filingStatus"])
         this.setState({registered: false, input:input, errors:this.state.errors})
     }
 
@@ -39,10 +38,8 @@ class Register extends React.Component {
     }
 
     handleSubmit(event) {
-        console.log(this.state);
         event.preventDefault();
         if (this.validate()) {
-            console.log("registering...")
             axios.post(API_URL + '/users/register', {
                 userID: this.state.input.username,
                 email: this.state.input["email"],
@@ -54,7 +51,6 @@ class Register extends React.Component {
                 annIncome: this.state.input["annualIncome"],
                 filingStatus: this.state.input["filingStatus"]
             }).then((response) => {
-                console.log(response.data)
                 if (response.data === 'User exists') { 
                     this.state.errors.usernameExists = "Username exists, try a different one."
                 
@@ -69,10 +65,8 @@ class Register extends React.Component {
                 }
             
             }
-            )
-            
+            )     
         }
-        console.log(this.state.registered)
     }      
     
     
