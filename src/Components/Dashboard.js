@@ -33,6 +33,14 @@ class Dashboard extends React.Component {
             })
         }
         else if (this.state.userType === "customer") {
+            axios.get(API_URL_USERS + '/' + this.state.userID)
+            .then((response) => {
+                console.log("api reponse")
+                console.log(response.data)
+                this.setState({user: response.data})
+            })
+            console.log("compontent mounting...")
+            console.log(this.state.user)
             axios.get(API_URL + "/expense/" + this.state.userID)
             .then((response) => {
                 this.setState({expenses: response.data})
@@ -234,11 +242,17 @@ class Dashboard extends React.Component {
     
 
     getMonthlyReport() {
+        console.log(this.state.user)
+        let total = 0;
+        this.state.expenses.forEach(element => {
+            total += element.amount
+        });
+        
         return (
             <div>
-                <h2>Expenses:</h2><br/>
-                <h2>Income: </h2><br/>
-                <h2>Savings: </h2>
+                <h2>Expenses: ${total}</h2><br/>
+                <h2>Income: ${(this.state.user.annIncome / 12).toFixed(2)}</h2><br/>
+                <h2>Savings: $ {this.state.user.annIncome - total} </h2>
             </div>
         )
     }
