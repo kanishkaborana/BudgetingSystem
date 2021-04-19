@@ -29,25 +29,24 @@ class Dashboard extends React.Component {
             axios.get(API_URL_USERS)
             .then((response) => {
                 this.setState({customers: response.data})
-                console.log((this.state.customers[0]))
             })
         }
         else if (this.state.userType === "customer") {
             axios.get(API_URL_USERS + '/' + this.state.userID)
             .then((response) => {
-                console.log("api reponse")
-                console.log(response.data)
                 this.setState({user: response.data})
             })
+<<<<<<< HEAD
             console.log("compontent mounting...")
             console.log(this.state.user)
             axios.get(API_URL + "/expenses/" + this.state.userID)
+=======
+            axios.get(API_URL + "/expense/" + this.state.userID)
+>>>>>>> 6038e7f40a17cc1ef07b3bf476512d3252c2645b
             .then((response) => {
                 this.setState({expenses: response.data})
-                console.log(this.state.expenses)
             })
         }
-        console.log(this.state)
     }
 
     handleDelete(index) {
@@ -58,57 +57,54 @@ class Dashboard extends React.Component {
             axios.get(API_URL_USERS)
                 .then((response) => {
                 this.setState({customers: response.data})
-                console.log((this.state.customers[0]))
                 })
         })
     }
 
     handleEdit(index) {
         let userID = document.getElementById("userID" + index).innerHTML
-        console.log("editting " + userID);
         this.props.history.push({pathname: '/EditUser', state: {admin: this.state.userID, user: userID}})
     }
 
     getCustomersTable() {
-            return (
-                <div>
-                    <Table striped bordered hover size="sm">
-                                <thead>
-                                    <tr>
-                                        <th>UserID</th>
-                                        <th>Email</th>
-                                        <th>First Name</th>
-                                        <th>Last Name</th>
-                                        <th></th>
-                                        <th></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {(this.state.customers).map((element, index) => {
-                                        console.log(index)
-                                        return(
-                                        <tr id = {"row" + index}>
-                                            <td id = {"userID" + index}>{element.userID}</td>
-                                            <td>{element.email}</td>
-                                            <td>{element.fname}</td>
-                                            <td>{element.lname}</td>
-                                            <td><button type="button" name="" id="" class="btn btn-primary" btn-lg btn-block onClick = {() => this.handleEdit(index)}>Edit</button></td>
-                                            <td><button type="button" name="" id="" class="btn btn-primary" btn-lg btn-block onClick = {() => this.handleDelete(index)}>Delete</button></td>
-                                        </tr>
-                                        )
-                                    })}
-                                </tbody>
-                        </Table>
-                </div>
-                )
-            }
+        return (
+            <div>
+                <Table striped bordered hover size="sm">
+                    <thead>
+                        <tr>
+                            <th>UserID</th>
+                            <th>Email</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {(this.state.customers).map((element, index) => {
+                            console.log(index)
+                            return(
+                            <tr id = {"row" + index}>
+                                <td id = {"userID" + index}>{element.userID}</td>
+                                <td>{element.email}</td>
+                                <td>{element.fname}</td>
+                                <td>{element.lname}</td>
+                                <td><button type="button" name="" id="" class="btn btn-primary" btn-lg btn-block onClick = {() => this.handleEdit(index)}>Edit</button></td>
+                                <td><button type="button" name="" id="" class="btn btn-primary" btn-lg btn-block onClick = {() => this.handleDelete(index)}>Delete</button></td>
+                            </tr>
+                            )
+                        })}
+                    </tbody>
+                </Table>
+            </div>
+        )
+    }
     
 
     
  
 
     updatePieData() {
-        console.log("updating pie data...")
         let array = [['Expense', 'Amount']];
         let color = '#FA3005' //RED
         this.state.expenses.forEach(element => {
@@ -126,7 +122,6 @@ class Dashboard extends React.Component {
         let groceriesTotal = 0;
         let otherTotal = 0;
         this.state.expenses.forEach(element => {
-            console.log(element)
             switch(element.category) {
                 case "Food":
                     foodTotal += element.amount
@@ -158,7 +153,6 @@ class Dashboard extends React.Component {
             groceriesTotal == 0 ? ['', ''] : ['Groceries', groceriesTotal],
             businessTotal == 0 ? ['', ''] : ['Business', businessTotal],
             otherTotal == 0 ? ['', ''] : ['Other', otherTotal] ];
-        console.log(arr)
         return arr;
     }
 
@@ -242,7 +236,6 @@ class Dashboard extends React.Component {
     
 
     getMonthlyReport() {
-        console.log(this.state.user)
         let total = 0;
         this.state.expenses.forEach(element => {
             total += element.amount
@@ -261,69 +254,96 @@ class Dashboard extends React.Component {
         //Based on 2019 tax data
         let tax_bracket;
         let user = this.state.user
-        if(user["filingStatus"]="Single"){
-            if(user["annIncome"]<=9700){
-                tax_bracket=0.10;
-            }else if(user["annIncome"]<=39475){
-                tax_bracket=0.12;
-            }else if(user["annIncome"]<=84200){
-                tax_bracket=0.22;
-            }else if(user["annIncome"]<=160725){
-                tax_bracket=0.24;
-            }else if(user["annIncome"]<=204100){
-                tax_bracket=0.32;
-            }else if(user["annIncome"]<=520300){
-                tax_bracket=0.35;
-            }else{
-                tax_bracket=0.37;
+        if(user["filingStatus"] == "Single") {
+            if(user["annIncome"] <= 9700) {
+                tax_bracket = 0.10;
             }
-        }else if(user["filingStatus"]="Married filing jointly"){
-            if(user["annIncome"]<=19400){
-                tax_bracket=0.10;
-            }else if(user["annIncome"]<=78950){
-                tax_bracket=0.12;
-            }else if(user["annIncome"]<=168400){
-                tax_bracket=0.22;
-            }else if(user["annIncome"]<=321450){
-                tax_bracket=0.24;
-            }else if(user["annIncome"]<=408200){
-                tax_bracket=0.32;
-            }else if(user["annIncome"]<=612350){
-                tax_bracket=0.35;
-            }else{
-                tax_bracket=0.37;
+            else if(user["annIncome"] <= 39475) {
+                tax_bracket = 0.12;
             }
-        }else if(user["filingStatus"]="Married filing separately"){
-            if(user["annIncome"]<=9700){
-                tax_bracket=0.10;
-            }else if(user["annIncome"]<=39475){
-                tax_bracket=0.12;
-            }else if(user["annIncome"]<=84200){
-                tax_bracket=0.22;
-            }else if(user["annIncome"]<=160725){
-                tax_bracket=0.24;
-            }else if(user["annIncome"]<=204100){
-                tax_bracket=0.32;
-            }else if(user["annIncome"]<=306175){
-                tax_bracket=0.35;
-            }else{
-                tax_bracket=0.37;
+            else if(user["annIncome"] <= 84200) {
+                tax_bracket = 0.22;
             }
-        }else{
-            if(user["annIncome"]<=13850){
-                tax_bracket=0.10;
-            }else if(user["annIncome"]<=52850){
-                tax_bracket=0.12;
-            }else if(user["annIncome"]<=84200){
+            else if(user["annIncome"] <= 160725) {
+                tax_bracket = 0.24;
+            }
+            else if(user["annIncome"] <= 204100) {
+                tax_bracket = 0.32;
+            }
+            else if(user["annIncome"] <= 520300) {
+                tax_bracket = 0.35;
+            }
+            else{
+                tax_bracket = 0.37;
+            }
+        }
+        else if(user["filingStatus"] == "Married filing jointly") {
+            if(user["annIncome"] <= 19400) {
+                tax_bracket = 0.10;
+            }
+            else if(user["annIncome"] <= 78950) {
+                tax_bracket = 0.12;
+            }
+            else if(user["annIncome"] <= 168400) {
                 tax_bracket=0.22;
-            }else if(user["annIncome"]<=160700){
-                tax_bracket=0.24;
-            }else if(user["annIncome"]<=204100){
+            }
+            else if(user["annIncome"] <= 321450) {
+                tax_bracket = 0.24;
+            }
+            else if(user["annIncome"] <= 408200) {
                 tax_bracket=0.32;
-            }else if(user["annIncome"]<=510300){
-                tax_bracket=0.35;
-            }else{
-                tax_bracket=0.37;
+            }
+            else if(user["annIncome"] <= 612350) {
+                tax_bracket = 0.35;
+            }
+            else{
+                tax_bracket = 0.37;
+            }
+        }
+        else if(user["filingStatus"] == "Married filing separately") {
+            if(user["annIncome"] <= 9700) {
+                tax_bracket = 0.10;
+            }
+            else if(user["annIncome"] <= 39475) {
+                tax_bracket=0.12;
+            }
+            else if(user["annIncome"] <= 84200) {
+                tax_bracket = 0.22;
+            }
+            else if(user["annIncome"] <= 160725) {
+                tax_bracket = 0.24;
+            }
+            else if(user["annIncome"] <= 204100) {
+                tax_bracket = 0.32;
+            }
+            else if(user["annIncome"] <= 306175) {
+                tax_bracket = 0.35;
+            }
+            else{
+                tax_bracket = 0.37;
+            }
+        }
+        else{
+            if(user["annIncome"] <= 13850) {
+                tax_bracket = 0.10;
+            }
+            else if(user["annIncome"] <= 52850) {
+                tax_bracket = 0.12;
+            }
+            else if(user["annIncome"] <= 84200) {
+                tax_bracket = 0.22;
+            }
+            else if(user["annIncome"] <= 160700) {
+                tax_bracket = 0.24;
+            }
+            else if(user["annIncome"] <= 204100) {
+                tax_bracket = 0.32;
+            }
+            else if(user["annIncome"] <= 510300) {
+                tax_bracket = 0.35;
+            }
+            else{
+                tax_bracket = 0.37;
             }
         }
         let tax_brack_statement="Your tax bracket is " + tax_bracket;

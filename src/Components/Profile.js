@@ -20,13 +20,10 @@ export default class Profile extends Component {
     }
 
     componentDidMount() {
-        console.log(this.state)
         let {username} = this.props.match.params
         axios.get(API_URL_USERS + '/' + username)
         .then((response) => {
-            
             this.setState({user: response.data})
-            console.log(this.state.user)
         })
     }
 
@@ -40,7 +37,6 @@ export default class Profile extends Component {
         event.preventDefault()
         if (this.validate()) {
             event.preventDefault()
-            console.log("calling api...")
             axios.post(API_URL_UPDATE_USER, {
                 userID: this.state.user["userID"],
                 email: this.state.user["email"],
@@ -56,16 +52,14 @@ export default class Profile extends Component {
                 if (response.data === "User updated"){ 
                     errors["update"] = "Profile successfully updated!"
                     this.setState({errors: errors})
-                }
-                else {
-                    console.log("not updated")
-                }
-            })
+                }})
+    
         }
     }
+    
 
     validate() {
-        let user = this.state.user
+        let user = this.state.user;
         let valid = true
         let errors = this.state.errors
 
@@ -90,79 +84,6 @@ export default class Profile extends Component {
         this.setState({user: user, errors:errors});
         console.log(valid)
         return valid;
-    }
-
-    printTaxBracket(){
-        //Based on 2019 tax data
-        let tax_bracket;
-        let user = this.state.user
-        if(user["filingStatus"]="Single"){
-            if(user["annIncome"]<=9700){
-                tax_bracket=0.10;
-            }else if(user["annIncome"]<=39475){
-                tax_bracket=0.12;
-            }else if(user["annIncome"]<=84200){
-                tax_bracket=0.22;
-            }else if(user["annIncome"]<=160725){
-                tax_bracket=0.24;
-            }else if(user["annIncome"]<=204100){
-                tax_bracket=0.32;
-            }else if(user["annIncome"]<=520300){
-                tax_bracket=0.35;
-            }else{
-                tax_bracket=0.37;
-            }
-        }else if(user["filingStatus"]="Married filing jointly"){
-            if(user["annIncome"]<=19400){
-                tax_bracket=0.10;
-            }else if(user["annIncome"]<=78950){
-                tax_bracket=0.12;
-            }else if(user["annIncome"]<=168400){
-                tax_bracket=0.22;
-            }else if(user["annIncome"]<=321450){
-                tax_bracket=0.24;
-            }else if(user["annIncome"]<=408200){
-                tax_bracket=0.32;
-            }else if(user["annIncome"]<=612350){
-                tax_bracket=0.35;
-            }else{
-                tax_bracket=0.37;
-            }
-        }else if(user["filingStatus"]="Married filing separately"){
-            if(user["annIncome"]<=9700){
-                tax_bracket=0.10;
-            }else if(user["annIncome"]<=39475){
-                tax_bracket=0.12;
-            }else if(user["annIncome"]<=84200){
-                tax_bracket=0.22;
-            }else if(user["annIncome"]<=160725){
-                tax_bracket=0.24;
-            }else if(user["annIncome"]<=204100){
-                tax_bracket=0.32;
-            }else if(user["annIncome"]<=306175){
-                tax_bracket=0.35;
-            }else{
-                tax_bracket=0.37;
-            }
-        }else{
-            if(user["annIncome"]<=13850){
-                tax_bracket=0.10;
-            }else if(user["annIncome"]<=52850){
-                tax_bracket=0.12;
-            }else if(user["annIncome"]<=84200){
-                tax_bracket=0.22;
-            }else if(user["annIncome"]<=160700){
-                tax_bracket=0.24;
-            }else if(user["annIncome"]<=204100){
-                tax_bracket=0.32;
-            }else if(user["annIncome"]<=510300){
-                tax_bracket=0.35;
-            }else{
-                tax_bracket=0.37;
-            }
-        }
-        let tax_brack_statement="Your tax bracket is " + tax_bracket;
-        alert(tax_brack_statement);
     }
 
     render() {

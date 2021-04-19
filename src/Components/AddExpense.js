@@ -22,10 +22,8 @@ class AddExpense extends React.Component {
     }
 
     componentDidMount () {
-        console.log(this.state)
         let input = this.state.input
         input["category"] = document.getElementById("category").value
-        console.log(input["category"])
         this.setState({added: false, input:input, errors:this.state.errors})
     }
 
@@ -41,26 +39,19 @@ class AddExpense extends React.Component {
     }
 
     handleSubmit(event) {
-        console.log(this.state);
         event.preventDefault();
         if (this.validate()) {
-            console.log("adding...")
             axios.post(API_URL + '/expenses/added', {
                 userID: this.state.input.userID,
                 amount: this.state.input["amount"],
                 category: this.state.input["category"],
                 dateAdded: this.state.input["dateAdded"],
                 expenseTitle: this.state.input["expenseTitle"],
-                
-                
-                
             }).then((response) => {
-                console.log(response.data)
                 this.setState ({added: true, errors : {output: response.data}})
                 }
             )
         }
-        console.log(this.state.added)
     } 
       
         
@@ -95,7 +86,6 @@ class AddExpense extends React.Component {
             <div>
                 <Navbar user = {this.props.location.state["user"]} userType = {this.props.location.state["userType"]}/>
                 <div id="registerContainer">
-                {/* {this.state.added && (<Redirect to="/AddExpense/Success"/>)} */}
                     <h1>Add an Expense</h1>
                     <Form onSubmit = {this.handleSubmit}>
                         <Form.Row>

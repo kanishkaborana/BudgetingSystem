@@ -13,14 +13,12 @@ class ManageExpense extends Component {
             expenses: [{}]
         }
         this.getExpensesTable = this.getExpensesTable.bind(this)
-        //this.handleDelete = this.handleDelete.bind(this)
     }
 
     componentDidMount() {
         axios.get(API_URL + '/expense/' + this.state.userID)
         .then((response) => {
             this.setState({expenses: response.data})
-            console.log((this.state.expenses[0]))
         })
     }
 
@@ -60,7 +58,6 @@ class ManageExpense extends Component {
                         </thead>
                         <tbody>
                             {(this.state.expenses).map((element, index) => {
-                            console.log(index)
                             return(
                             <tr id = {"row" + index}>
                                 <td id = {"expenseID" + index}>{element.expenseID}</td>

@@ -21,13 +21,9 @@ export default class EditUser extends Component {
     }
 
     componentDidMount() {
-        console.log(this.state)
-        console.log(this.state.user["userID"])
         axios.get(API_URL_USERS + '/' + this.state.user["userID"])
         .then((response) => {
-            
             this.setState({user: response.data})
-            console.log(this.state.user)
         })
     }
 

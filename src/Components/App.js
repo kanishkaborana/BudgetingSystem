@@ -22,39 +22,23 @@ function App() {
   const loggedIn = credentials => {
 
     axios.post(API_URL + '/users/authenticate', {
-              userID: credentials.userID,
-              password: credentials.password
-          })
-          .then((response) => {
-              let newLoggedIn = false;
-              console.log(response.data);
-
-              if (response.data === "Customer Permission Granted") {
-                setUserType("customer")
-                console.log("logged in");
-                newLoggedIn = true;
-                console.log("poop");
-                setUser(credentials.userID)
-                console.log(user)
-                console.log(credentials.userID)
-                  
-              }
-              else if (response.data === "Admin Permission Granted") {
-                setUserType("admin")
-                console.log("logged in");
-                newLoggedIn = true;
-                console.log("poop");
-                setUser(credentials.userID)
-                console.log(user)
-                console.log(credentials.userID)
-                  
-              }
-              else
-                setErrors(response.data)
-              
-
-                 
-          });
+      userID: credentials.userID,
+      password: credentials.password})
+        .then((response) => {
+            let newLoggedIn = false;
+            if (response.data === "Customer Permission Granted") {
+              setUserType("customer")
+              newLoggedIn = true;
+              setUser(credentials.userID)
+            }
+            else if (response.data === "Admin Permission Granted") {
+              setUserType("admin")
+              newLoggedIn = true;
+              setUser(credentials.userID)
+            }
+            else
+              setErrors(response.data)
+        });
          
           
   }
