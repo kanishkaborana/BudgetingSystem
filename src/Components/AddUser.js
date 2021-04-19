@@ -24,9 +24,7 @@ class AddUser extends React.Component {
 
     componentDidMount () {
         let input = this.state.input
-        //input["filingStatus"] = document.getElementById("filingStatus").value
         input["userType"] = "customer"
-        console.log(input["userType"])
         this.setState({registered: false, input:input, errors:this.state.errors})
     }
 
@@ -41,12 +39,9 @@ class AddUser extends React.Component {
     }
 
     handleSubmit(event) {
-        console.log(this.state);
         event.preventDefault();
         if (this.validate()) {
-            console.log("registering...")
             if (this.state.input["userType"] === 'customer') {
-                console.log("customer...")
                 axios.post(API_URL + '/users/register', {
                     userID: this.state.input.username,
                     email: this.state.input["email"],
@@ -58,8 +53,6 @@ class AddUser extends React.Component {
                     annIncome: this.state.input["annualIncome"],
                     filingStatus: this.state.input["filingStatus"]
                 }).then((response) => {
-                    console.log(response.data)
-                    
                     if (response.data === 'User exists') { 
                         this.state.errors.usernameExists = "Username exists, try a different one."
                         this.state.errors["output"] = response.data
@@ -77,7 +70,6 @@ class AddUser extends React.Component {
                 )
             }
             else {
-                console.log("admin....")
                 axios.post(API_URL + '/users/register', {
                     userID: this.state.input.username,
                     email: this.state.input["email"],
@@ -89,8 +81,6 @@ class AddUser extends React.Component {
                     annIncome: 0,
                     filingStatus: "Single"
                 }).then((response) => {
-                    console.log(response.data)
-                    
                     if (response.data === 'User exists') { 
                         this.state.errors.usernameExists = "Username exists, try a different one."
                         this.state.errors["output"] = response.data
@@ -107,9 +97,7 @@ class AddUser extends React.Component {
                 }
                 )
             }
-            
         }
-        console.log(this.state.registered)
     }      
     
     
