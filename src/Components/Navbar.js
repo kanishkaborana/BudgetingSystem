@@ -34,16 +34,18 @@ class Navbar extends React.Component {
                                 <img src={plusIcon} style = {{height: 30, width: 40}}></img>
                                 </a>
                             </Link>
-                                <li class="nav-item active">
-                                    <a class="nav-link" href="#"> Manage Expenses</a>
-                                </li>
-                                <li class="nav-item active">
+                            <li class="nav-item active">
+                            <Link to = {{pathname: '/ManageExpense', state: {user: this.props.user, userType: this.props.userType}}}>
+                                <a class="nav-link"> Manage Expenses</a>
+                            </Link>
+                            </li>
+                            <li class="nav-item active">
                                 <Link to = {{pathname: '/Profile/' + this.props.user, state: {userType: this.props.userType}}}>
-                                        <a class = 'nav-link' style = {{color: "white"}}>
-                                        Profile <span ><img src={profileIcon} style = {{height: 30, width: 30}}></img></span>
-                                        </a>
-                                    </Link>
-                                </li>           
+                                    <a class = 'nav-link' style = {{color: "white"}}>
+                                    Profile <span ><img src={profileIcon} style = {{height: 30, width: 30}}></img></span>
+                                    </a>
+                                </Link>
+                            </li>           
                             </ul>
                             <form class="form-inline my-2 my-lg-0">
                                 <Link to = ''>
