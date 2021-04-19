@@ -10,6 +10,7 @@ export default class EditExpense extends Component {
     constructor(props){
         super(props)
         this.state = {
+            user: {},
             input: {expenseID: this.props.location.state["input"]},
             errors: {}
         }
@@ -78,7 +79,7 @@ export default class EditExpense extends Component {
             errors["dateError"] = ""
         }
     
-        this.setState({user: user, errors:errors});
+        this.setState({ errors:errors});
         return valid;
     }
 

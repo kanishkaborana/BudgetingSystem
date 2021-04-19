@@ -36,9 +36,8 @@ class Dashboard extends React.Component {
             .then((response) => {
                 this.setState({user: response.data})
             })
-            console.log("compontent mounting...")
-            console.log(this.state.user)
-            axios.get(API_URL + "/expenses/" + this.state.userID)
+            
+            axios.get(API_URL + "/expense/" + this.state.userID)
             .then((response) => {
                 this.setState({expenses: response.data})
             })
@@ -52,7 +51,7 @@ class Dashboard extends React.Component {
             //update customers table
             axios.get(API_URL_USERS)
                 .then((response) => {
-                this.setState({customers: response.data})
+                    this.setState({customers: response.data})
                 })
         })
     }
@@ -78,7 +77,6 @@ class Dashboard extends React.Component {
                     </thead>
                     <tbody>
                         {(this.state.customers).map((element, index) => {
-                            console.log(index)
                             return(
                             <tr id = {"row" + index}>
                                 <td id = {"userID" + index}>{element.userID}</td>
@@ -96,13 +94,8 @@ class Dashboard extends React.Component {
         )
     }
     
-
-    
- 
-
     updatePieData() {
         let array = [['Expense', 'Amount']];
-        let color = '#FA3005' //RED
         this.state.expenses.forEach(element => {
             array.push([element.expenseTitle, element.amount])
         });
@@ -118,6 +111,7 @@ class Dashboard extends React.Component {
         let groceriesTotal = 0;
         let otherTotal = 0;
         this.state.expenses.forEach(element => {
+            
             switch(element.category) {
                 case "Food":
                     foodTotal += element.amount
@@ -241,7 +235,7 @@ class Dashboard extends React.Component {
             <div>
                 <h2>Expenses: ${total}</h2><br/>
                 <h2>Income: ${(this.state.user.annIncome / 12).toFixed(2)}</h2><br/>
-                <h2>Savings: $ {this.state.user.annIncome - total} </h2>
+                <h2>Savings: $ {((this.state.user.annIncome / 12) - total).toFixed(2)} </h2>
             </div>
         )
     }
@@ -250,7 +244,7 @@ class Dashboard extends React.Component {
         //Based on 2019 tax data
         let tax_bracket;
         let user = this.state.user
-        if(user["filingStatus"] == "Single") {
+        if(user["filingStatus"] = "Single") {
             if(user["annIncome"] <= 9700) {
                 tax_bracket = 0.10;
             }
@@ -269,11 +263,11 @@ class Dashboard extends React.Component {
             else if(user["annIncome"] <= 520300) {
                 tax_bracket = 0.35;
             }
-            else{
+            else {
                 tax_bracket = 0.37;
             }
         }
-        else if(user["filingStatus"] == "Married filing jointly") {
+        else if(user["filingStatus"] = "Married filing jointly") {
             if(user["annIncome"] <= 19400) {
                 tax_bracket = 0.10;
             }
@@ -281,27 +275,27 @@ class Dashboard extends React.Component {
                 tax_bracket = 0.12;
             }
             else if(user["annIncome"] <= 168400) {
-                tax_bracket=0.22;
+                tax_bracket = 0.22;
             }
             else if(user["annIncome"] <= 321450) {
                 tax_bracket = 0.24;
             }
             else if(user["annIncome"] <= 408200) {
-                tax_bracket=0.32;
+                tax_bracket = 0.32;
             }
             else if(user["annIncome"] <= 612350) {
                 tax_bracket = 0.35;
             }
-            else{
+            else {
                 tax_bracket = 0.37;
             }
         }
-        else if(user["filingStatus"] == "Married filing separately") {
+        else if(user["filingStatus"] = "Married filing separately") {
             if(user["annIncome"] <= 9700) {
                 tax_bracket = 0.10;
             }
             else if(user["annIncome"] <= 39475) {
-                tax_bracket=0.12;
+                tax_bracket = 0.12;
             }
             else if(user["annIncome"] <= 84200) {
                 tax_bracket = 0.22;
@@ -315,30 +309,23 @@ class Dashboard extends React.Component {
             else if(user["annIncome"] <= 306175) {
                 tax_bracket = 0.35;
             }
-            else{
+            else {
                 tax_bracket = 0.37;
             }
-        }
-        else{
-            if(user["annIncome"] <= 13850) {
+        }else{
+            if(user["annIncome"] <= 13850){
                 tax_bracket = 0.10;
-            }
-            else if(user["annIncome"] <= 52850) {
+            }else if(user["annIncome"] <= 52850){
                 tax_bracket = 0.12;
-            }
-            else if(user["annIncome"] <= 84200) {
+            }else if(user["annIncome"] <= 84200){
                 tax_bracket = 0.22;
-            }
-            else if(user["annIncome"] <= 160700) {
+            }else if(user["annIncome"] <= 160700){
                 tax_bracket = 0.24;
-            }
-            else if(user["annIncome"] <= 204100) {
+            }else if(user["annIncome"] <= 204100){
                 tax_bracket = 0.32;
-            }
-            else if(user["annIncome"] <= 510300) {
+            }else if(user["annIncome"] <= 510300){
                 tax_bracket = 0.35;
-            }
-            else{
+            }else{
                 tax_bracket = 0.37;
             }
         }
