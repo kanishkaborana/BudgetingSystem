@@ -13,12 +13,14 @@ import Profile from './Components/Profile'
 import AddExpense from './Components/AddExpense'
 import ManageExpense from './Components/ManageExpense'
 import EditUser from './Components/EditUser'
+import EditExpense from './Components/EditExpense'
 
 ReactDOM.render(
   <BrowserRouter>
     <Route path = "/" exact component = {App}/>
     <Route path = "/AddExpense" exact component = {AddExpense}/>
     <Route path = "/ManageExpense" exact component = {ManageExpense}/>
+    <Route path = "/EditExpense" exact component = {EditExpense}/>
     <Route path = "/AddUser" exact component = {AddUser}/>
     <Route path = "/Login" exact component = {App}/>
     <Route path = "/Register" exact component = {Register}/>

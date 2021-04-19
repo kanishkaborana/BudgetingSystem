@@ -41,7 +41,7 @@ class Dashboard extends React.Component {
             })
             console.log("compontent mounting...")
             console.log(this.state.user)
-            axios.get(API_URL + "/expense/" + this.state.userID)
+            axios.get(API_URL + "/expenses/" + this.state.userID)
             .then((response) => {
                 this.setState({expenses: response.data})
                 console.log(this.state.expenses)

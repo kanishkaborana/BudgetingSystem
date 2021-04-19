@@ -27,7 +27,7 @@ public class ExpenseController {
 		return expenseService.getExpenseByID(id);
 	}
 
-	@RequestMapping("/expense/{userID}")
+	@RequestMapping("/expenses/{userID}")
 	public Iterable<Expense> getExpenseByUserID(@PathVariable String userID) {
 		System.out.println(expenseService.getExpensesByUserID(userID));
 		return expenseService.getExpensesByUserID(userID);
