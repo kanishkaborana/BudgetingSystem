@@ -3,6 +3,7 @@ import axios from 'axios'
 import {API_URL, API_URL_EXPENSES, API_URL_EXPENSE_DELETE } from '../config'
 import {Table} from 'react-bootstrap'
 import {Link, Redirect} from 'react-router-dom'
+import Navbar from './Navbar'
 
 class ManageExpense extends Component {
 
@@ -80,6 +81,7 @@ class ManageExpense extends Component {
         const table =  this.getExpensesTable()
         return (
             <div>
+                <Navbar user = {this.state.userID} userType = {"customer"}/>
                 <h2>Expenses List</h2>
                 {table}
                 
