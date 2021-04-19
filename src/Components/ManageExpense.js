@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios'
-import {API_URL, API_URL_EXPENSE_DELETE } from '../config'
+import {API_URL, API_URL_EXPENSES, API_URL_EXPENSE_DELETE } from '../config'
 import {Table} from 'react-bootstrap'
 import {Link, Redirect} from 'react-router-dom'
 
@@ -20,6 +20,25 @@ class ManageExpense extends Component {
         .then((response) => {
             this.setState({expenses: response.data})
         })
+    }
+
+    handleDelete(index) {
+        let expenseID = document.getElementById("expenseID" + index).innerHTML
+        axios.delete(API_URL_EXPENSE_DELETE + '/' + expenseID)
+        .then((response) => {
+            //update expenses table
+            axios.get(API_URL_EXPENSES + this.state.userID)
+                .then((response) => {
+                this.setState({customers: response.data})
+                console.log((this.state.customers[0]))
+                })
+        })
+    }
+
+    handleEdit(index) {
+        let expenseID = document.getElementById("expenseID" + index).innerHTML
+        console.log("editting " + expenseID);
+        this.props.history.push({pathname: '/EditExpense', state: {input: this.state.expenseID}})
     }
 
     getExpensesTable() {
@@ -61,7 +80,7 @@ class ManageExpense extends Component {
         const table =  this.getExpensesTable()
         return (
             <div>
-                <h2>Expense List</h2>
+                <h2>Expenses List</h2>
                 {table}
                 
             </div>
