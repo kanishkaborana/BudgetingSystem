@@ -51,5 +51,12 @@ public class ExpenseController {
 		return expenseService.add(newExpense);
 	}
 
+	@CrossOrigin(origins = "http://localhost:8080")
+	@PostMapping(value = "/expenses/update")
+	public @ResponseBody String update(@RequestBody Expense newExpense) {
+		System.out.println(newExpense);
+		return expenseService.update(newExpense);
+	}
+
     
 }
