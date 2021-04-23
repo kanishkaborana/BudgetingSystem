@@ -1,5 +1,7 @@
 package app.expense;
 
+import java.sql.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -62,6 +64,12 @@ public class ExpenseController {
 	public @ResponseBody String update(@RequestBody Expense newExpense) {
 		System.out.println(newExpense);
 		return expenseService.update(newExpense);
+	}
+
+	@CrossOrigin(origins = "http://localhost:8080")
+	@RequestMapping(value = "/expenses/month/{month}")
+	public @ResponseBody Iterable<Expense> getExpensesByMonth(@PathVariable Date month) {
+		return expenseService.getExpensesByMonth(month);
 	}
 
     

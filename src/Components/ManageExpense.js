@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios'
-import {API_URL, API_URL_EXPENSES, API_URL_EXPENSE_DELETE } from '../config'
+import {API_URL, API_URL_EXPENSES, API_URL_EXPENSE, API_URL_EXPENSE_DELETE } from '../config'
 import {Table} from 'react-bootstrap'
 import {Link, Redirect} from 'react-router-dom'
 import Navbar from './Navbar'
@@ -11,16 +11,18 @@ class ManageExpense extends Component {
         super(props);
         this.state = {
             userID: this.props.location.state["user"],
+            userType: this.props.location.state["userType"],
             expenses: [{}]
         }
         this.getExpensesTable = this.getExpensesTable.bind(this)
     }
 
     componentDidMount() {
-        axios.get(API_URL + '/expense/' + this.state.userID)
+        axios.get(API_URL_EXPENSE + "/" + this.state.userID)
         .then((response) => {
-            this.setState({expenses: response.data})
-        })
+            this.setState({
+                expenses: response.data})
+            })
     }
 
     handleDelete(index) {
@@ -28,10 +30,12 @@ class ManageExpense extends Component {
         axios.delete(API_URL_EXPENSE_DELETE + '/' + expenseID)
         .then((response) => {
             //update expenses table
-            axios.get(API_URL_EXPENSES + this.state.userID)
-                .then((response) => {
-                this.setState({customers: response.data})
-                console.log((this.state.customers[0]))
+            axios.get(API_URL_EXPENSE + "/" + this.state.userID)
+                .then((response) => {   
+                    this.setState({
+                        expenses: response.data
+                    })       
+                    console.log(response.data)
                 })
         })
     }
@@ -39,7 +43,7 @@ class ManageExpense extends Component {
     handleEdit(index) {
         let expenseID = document.getElementById("expenseID" + index).innerHTML
         console.log("editting " + expenseID);
-        this.props.history.push({pathname: '/EditExpense', state: {input: this.state.expenseID}})
+        this.props.history.push({pathname: '/EditExpense', state: {expenseID: expenseID, userID: this.state.userID, userType: this.state.userType}})
     }
 
     getExpensesTable() {

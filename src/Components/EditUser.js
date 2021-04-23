@@ -79,6 +79,7 @@ export default class EditUser extends Component {
         }
         if(user["filingStatus"] === "" || user["filingStatus"] === null){
             errors["filingStatus"] = "Please select a filing status."
+            valid = false;
         }
     
         this.setState({user: user, errors:errors});

@@ -10,8 +10,9 @@ export default class EditExpense extends Component {
     constructor(props){
         super(props)
         this.state = {
-            user: {},
-            input: {expenseID: this.props.location.state["input"]},
+            userID: this.props.location.state["userID"],
+            userType: this.props.location.state["userType"],
+            input: {},
             errors: {}
         }
         this.handleChange = this.handleChange.bind(this);
@@ -20,7 +21,8 @@ export default class EditExpense extends Component {
 
     componentDidMount() {
         console.log(this.state)
-        axios.get(API_URL_EXPENSES + '/' + this.state.user["userID"])
+        console.log(API_URL_EXPENSES + '/' + this.props.location.state["expenseID"])
+        axios.get(API_URL_EXPENSES + '/' + this.props.location.state["expenseID"])
         .then((response) => {
             this.setState({input: response.data})
             console.log(this.state.input)
@@ -32,19 +34,19 @@ export default class EditExpense extends Component {
         input[event.target.name] = event.target.value;
       
         this.setState({
-            added: false,
-            input:input,
-            errors: this.state.errors
+            input: input
         });
     }
 
     handleSubmit(event) {
         event.preventDefault()
+        console.log(this.state.input)
         if (this.validate()) {
             event.preventDefault()
 
             axios.post(API_URL_UPDATE_EXPENSE, {
-                userID: this.state.input.userID,
+                expenseID: this.state.input["expenseID"],
+                userID: this.state.input["userID"],
                 amount: this.state.input["amount"],
                 category: this.state.input["category"],
                 dateAdded: this.state.input["dateAdded"],
@@ -52,7 +54,7 @@ export default class EditExpense extends Component {
             }).then((response) => {
                 let errors = this.state.errors
                 if (response.data === "Expense updated"){ 
-                    errors["update"] = "Expense successfully updated!"
+                    errors["output"] = "Expense successfully updated!"
                     this.setState({errors: errors})
                 }
             })
@@ -60,20 +62,22 @@ export default class EditExpense extends Component {
     }
 
     validate() {
-        let input = this.state.input
         let valid = true;
-        let errors = this.state.errors;
+        let errors = {};
+        let input = this.state.input;
         let dateAdded = new Date(input["dateAdded"])
         let today = new Date()
         
         // handling category 
         if(input["category"] === "" || input["category"] === null){
             errors["category"] = "Please select a category."
+            valid = false;
         }
 
         //handling date error
         if (dateAdded > today){
             errors["dateError"] = "Date cannot be a future date."
+            valid = false;
         }
         else {
             errors["dateError"] = ""
@@ -88,15 +92,15 @@ export default class EditExpense extends Component {
     render() {
         return (
             <div>
-            <Navbar user = {this.state.user} userType = {this.props.location.state["userType"]}/>
+            <Navbar user = {this.state.userID} userType = {this.state.userType}/>
             <div id="registerContainer">
             {/* {this.state.added && (<Redirect to="/AddExpense/Success"/>)} */}
-                <h1>Edit an Expense</h1>
+                <h1>Edit Expense {this.state.input.expenseID}</h1>
                 <Form onSubmit = {this.handleSubmit}>
                     <Form.Row>
                         <Form.Group as={Col} controlId="formExpenseTitle">
                             <Form.Label>Expense Title</Form.Label>
-                            <Form.Control type = "text" name = "expenseTitle" onChange = {this.handleChange} required/>
+                            <Form.Control type = "text" name = "expenseTitle" value = {this.state.input["expenseTitle"]} onChange = {this.handleChange} required/>
                         </Form.Group>                    
                     </Form.Row>
 
@@ -104,7 +108,7 @@ export default class EditExpense extends Component {
                         <Form.Group as={Col} controlId="formDate">
                             <Form.Label>Date</Form.Label>
                             
-                            <Form.Control type = "date" name = "dateAdded"  onChange = {this.handleChange} required />
+                            <Form.Control type = "date" name = "dateAdded" value = {this.state.input["dateAdded"]} onChange = {this.handleChange} required />
                             <Form.Text>{this.state.errors.dateError}</Form.Text>     
                         </Form.Group>
 
@@ -114,7 +118,7 @@ export default class EditExpense extends Component {
                             <InputGroup.Prepend>
                             <InputGroup.Text>$</InputGroup.Text>
                             </InputGroup.Prepend>
-                            <Form.Control type = "number" min={0} name = "amount" onChange = {this.handleChange} />
+                            <Form.Control type = "number" min={0} name = "amount" value = {this.state.input["amount"]} onChange = {this.handleChange} />
                         </InputGroup>
                         </Form.Group>    
                     </Form.Row>
@@ -122,7 +126,7 @@ export default class EditExpense extends Component {
                     <Form.Row>
                         <Form.Group as={Col} controlId="formCategory">
                         <Form.Label>Category</Form.Label>
-                        <Form.Control as="select"  name = "category" id = "category" onChange = {this.handleChange} required>
+                        <Form.Control as="select"  name = "category" id = "category" value = {this.state.input["category"]} onChange = {this.handleChange} required>
                             <option>Food</option>
                             <option>Groceries</option>
                             <option>Rent/Mortgage</option>
