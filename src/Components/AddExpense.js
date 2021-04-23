@@ -39,14 +39,19 @@ class AddExpense extends React.Component {
     }
 
     handleSubmit(event) {
+        let recurring = 0;
         event.preventDefault();
         if (this.validate()) {
+            if(document.getElementById("recurring").checked){
+                recurring = 1;
+            }
             axios.post(API_URL + '/expenses/added', {
                 userID: this.state.input.userID,
                 amount: this.state.input["amount"],
                 category: this.state.input["category"],
                 dateAdded: this.state.input["dateAdded"],
                 expenseTitle: this.state.input["expenseTitle"],
+                recurring: recurring
             }).then((response) => {
                 this.setState ({added: true, errors : {output: response.data}})
                 }
@@ -129,6 +134,12 @@ class AddExpense extends React.Component {
                             </Form.Control>
                             <Form.Text>{this.state.errors.category}</Form.Text>
                             </Form.Group>          
+                        </Form.Row>
+
+                        <Form.Row>
+                            <Form.Group as={Col} controlId="formRecurring">
+                                <Form.Check inline label="Recurring" id="recurring"/>
+                            </Form.Group>
                         </Form.Row>
 
                         <Form.Group className = "btn1">

@@ -17,6 +17,7 @@ public class Expense {
     private Date dateAdded;
     private Double amount;
     private String category;
+    private int recurring;
 
     public Expense() {
         super();
@@ -26,15 +27,17 @@ public class Expense {
         this.dateAdded = null;
         this.amount = 0.0;
         this.category = "";
+        this.recurring = 0;
     }
 
-    public Expense(String userID, String expenseTitle, Date dateAdded, Double amount, String category) {
+    public Expense(String userID, String expenseTitle, Date dateAdded, Double amount, String category, int recurring) {
         super();
         this.userID = userID;
         this.expenseTitle = expenseTitle;
         this.dateAdded = dateAdded;
         this.amount = amount;
         this.category = category;
+        this.recurring = recurring;
     }
     
     
@@ -74,6 +77,12 @@ public class Expense {
     }
     public void setCategory(String category) {
         this.category = category;
+    }
+    public int getRecurring() {
+        return recurring;
+    }
+    public void setRecurring(int recurring) {
+        this.recurring = recurring;
     }
 
     public String toString() {
