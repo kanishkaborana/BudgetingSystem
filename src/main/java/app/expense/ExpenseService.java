@@ -1,9 +1,9 @@
 package app.expense;
 
+import java.sql.Date;
 import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -66,6 +66,13 @@ public class ExpenseService {
 		updateExpense.setDateAdded(expense.getDateAdded());
 		expenseRepo.save(updateExpense);
 		return "Expense updated";
+	}
+
+	public Iterable<Expense> getExpensesByMonth(int month, int year) {
+		Date date1 = new Date(month.getYear(), month.getMonth(), 1);
+		Date date2 = new Date(month.getYear(), month.getMonth() + 1, 0);
+		System.out.println(date1 + " " + date2);
+		return expenseRepo.getExpensesBetween(date1, date2);
 	}
     
 }
