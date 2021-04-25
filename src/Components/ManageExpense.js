@@ -18,6 +18,7 @@ class ManageExpense extends Component {
     }
 
     componentDidMount() {
+        console.log(this.state)
         axios.get(API_URL_EXPENSE + "/" + this.state.userID)
         .then((response) => {
             this.setState({
@@ -57,6 +58,7 @@ class ManageExpense extends Component {
                                 <th>Date added</th>
                                 <th>Amount</th>
                                 <th>Category</th>
+                                <th>Recurring</th>
                                 <th></th>
                                 <th></th>
                             </tr>
@@ -69,6 +71,7 @@ class ManageExpense extends Component {
                                 <td>{element.expenseTitle}</td>                                        <td>{element.dateAdded}</td>
                                 <td>{element.amount}</td>
                                 <td>{element.category}</td>
+                                <td>{element.recurring === "1" ? "Yes" : "No" }</td>
                                 <td><button type="button" name="" id="" class="btn btn-primary" btn-lg btn-block onClick = {() => this.handleEdit(index)}>Edit</button></td>
                                 <td><button type="button" name="" id="" class="btn btn-primary" btn-lg btn-block onClick = {() => this.handleDelete(index)}>Delete</button></td>
                             </tr>

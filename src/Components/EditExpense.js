@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
-import { useState } from 'react'
 import axios from 'axios'
 import { API_URL_UPDATE_EXPENSE, API_URL_EXPENSES } from '../config'
 import Navbar from './Navbar'
 import {Form, Button, Col, InputGroup} from 'react-bootstrap'
+import { Redirect } from 'react-router'
 
 export default class EditExpense extends Component {
 
@@ -12,6 +12,7 @@ export default class EditExpense extends Component {
         this.state = {
             userID: this.props.location.state["userID"],
             userType: this.props.location.state["userType"],
+            editted: false,
             input: {},
             errors: {}
         }
@@ -24,26 +25,43 @@ export default class EditExpense extends Component {
         console.log(API_URL_EXPENSES + '/' + this.props.location.state["expenseID"])
         axios.get(API_URL_EXPENSES + '/' + this.props.location.state["expenseID"])
         .then((response) => {
-            this.setState({input: response.data})
+            this.setState({editted:false, input: response.data})
             console.log(this.state.input)
+            this.state.input["recurring"] === "1" ? document.getElementById("recurring").checked = true : document.getElementById("recurring").checked = false
         })
     }
 
     handleChange(event) {
+        console.log(this.state.input)
         let input = this.state.input;
+    
         input[event.target.name] = event.target.value;
+
+
+        
+        if (event.target.name == "recurring") {
+            input["recurring"] = document.getElementById("recurring").checked ? 1 : 0
+        }
+        
       
         this.setState({
+            editted:false,
             input: input
         });
     }
 
     handleSubmit(event) {
+        //let recurring = 0
         event.preventDefault()
         console.log(this.state.input)
         if (this.validate()) {
             event.preventDefault()
-
+            /*
+            if(document.getElementById("recurring").checked){
+                recurring = 1;
+            }
+            */
+            //console.log(recurring)
             axios.post(API_URL_UPDATE_EXPENSE, {
                 expenseID: this.state.input["expenseID"],
                 userID: this.state.input["userID"],
@@ -51,11 +69,12 @@ export default class EditExpense extends Component {
                 category: this.state.input["category"],
                 dateAdded: this.state.input["dateAdded"],
                 expenseTitle: this.state.input["expenseTitle"],
+                recurring: this.state.input["recurring"],
             }).then((response) => {
                 let errors = this.state.errors
                 if (response.data === "Expense updated"){ 
                     errors["output"] = "Expense successfully updated!"
-                    this.setState({errors: errors})
+                    this.setState({ editted:true, errors: errors})
                 }
             })
         }
@@ -75,7 +94,7 @@ export default class EditExpense extends Component {
         }
 
         //handling date error
-        if (dateAdded > today){
+        if (dateAdded >= today){
             errors["dateError"] = "Date cannot be a future date."
             valid = false;
         }
@@ -92,9 +111,9 @@ export default class EditExpense extends Component {
     render() {
         return (
             <div>
+            {this.state.editted && (<Redirect to= {{pathname: '/ManageExpense', state: {user: this.state.userID, userType: this.state.userType}}}/>) }
             <Navbar user = {this.state.userID} userType = {this.state.userType}/>
             <div id="registerContainer">
-            {/* {this.state.added && (<Redirect to="/AddExpense/Success"/>)} */}
                 <h1>Edit Expense {this.state.input.expenseID}</h1>
                 <Form onSubmit = {this.handleSubmit}>
                     <Form.Row>
@@ -139,6 +158,12 @@ export default class EditExpense extends Component {
                         <Form.Text>{this.state.errors.category}</Form.Text>
                         </Form.Group>          
                     </Form.Row>
+
+                    <Form.Row>
+                            <Form.Group as={Col} controlId="formRecurring">
+                                <Form.Check inline label="Recurring" id="recurring" name = "recurring" onChange = {this.handleChange} />
+                            </Form.Group>
+                        </Form.Row>
 
                     <Form.Group className = "btn1">
                         <Button variant="primary" type="submit">

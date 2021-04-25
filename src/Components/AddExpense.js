@@ -54,11 +54,19 @@ class AddExpense extends React.Component {
                 recurring: recurring
             }).then((response) => {
                 this.setState ({added: true, errors : {output: response.data}})
+                //console.log("clearing...")
+                //this.clear()
                 }
             )
         }
+        ReactDOM.findDOMNode(this.messageForm).reset();
     } 
-      
+    
+    /*
+    clear(){
+        this.form.reset()
+    }
+    */
         
     validate() {
         
@@ -94,7 +102,7 @@ class AddExpense extends React.Component {
                 <Navbar user = {this.props.location.state["user"]} userType = {this.props.location.state["userType"]}/>
                 <div id="registerContainer">
                     <h1>Add an Expense</h1>
-                    <Form onSubmit = {this.handleSubmit}>
+                    <Form onSubmit = {this.handleSubmit} ref={ form => this.messageForm = form }>
                         <Form.Row>
                             <Form.Group as={Col} controlId="formExpenseTitle">
                                 <Form.Label>Expense Title</Form.Label>
