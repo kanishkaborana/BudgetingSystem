@@ -1,6 +1,7 @@
 package app.expense;
 
 import java.sql.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+
 
 @CrossOrigin(origins = "http://localhost:8080")
 @RestController
@@ -67,10 +69,21 @@ public class ExpenseController {
 	}
 
 	@CrossOrigin(origins = "http://localhost:8080")
-	@RequestMapping(value = "/expenses/month/{month}")
-	public @ResponseBody Iterable<Expense> getExpensesByMonth(@PathVariable Date month) {
-		return expenseService.getExpensesByMonth(month);
+	@RequestMapping(value = "/expenses/{id}/month/{month}/year/{year}")
+	public @ResponseBody Iterable<Expense> getExpensesByMonth(@PathVariable String id, @PathVariable int year, @PathVariable int month) {
+		return expenseService.getExpensesByMonth(id, month, year);
 	}
 
+	@CrossOrigin(origins = "http://localhost:8080")
+	@RequestMapping(value = "/expenses/{id}/year/{year}")
+	public @ResponseBody Iterable<Expense> getExpensesByYear(@PathVariable String id, @PathVariable int year) {
+		return expenseService.getExpensesByYear(id, year);
+	}
+
+	@CrossOrigin(origins = "http://localhost:8080")
+	@RequestMapping(value = "/expenses/{id}/monthly/{year}")
+	public @ResponseBody List<MonthlyReport> getMonthlyExpenses(@PathVariable String id, @PathVariable int year) {
+		return expenseService.getMonthlyExpenses(id, year);
+	}
     
 }

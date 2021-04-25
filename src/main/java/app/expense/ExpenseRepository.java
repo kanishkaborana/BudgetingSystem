@@ -9,6 +9,8 @@ public interface ExpenseRepository extends CrudRepository<Expense, Integer> {
     @Query(value = "SELECT * FROM budgeting_system.expense WHERE userID = (:userID)", nativeQuery = true)
 	public Iterable<Expense> getExpensesByUserID(String userID);
     
-    @Query(value = "SELECT * FROM budgeting_system.expense WHERE date_added between (:date1) and (:date2)", nativeQuery = true)
-	public Iterable<Expense> getExpensesBetween(Date date1, Date date2);
+    @Query(value = "SELECT * FROM budgeting_system.expense WHERE (date_added between (:date1) and (:date2)) AND userID = (:userID) ", nativeQuery = true)
+	public Iterable<Expense> getExpensesBetween(String userID, Date date1, Date date2);
 }
+
+

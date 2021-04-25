@@ -1,6 +1,8 @@
 package app.expense;
 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,11 +70,32 @@ public class ExpenseService {
 		return "Expense updated";
 	}
 
-	public Iterable<Expense> getExpensesByMonth(int month, int year) {
-		Date date1 = new Date(month.getYear(), month.getMonth(), 1);
-		Date date2 = new Date(month.getYear(), month.getMonth() + 1, 0);
-		System.out.println(date1 + " " + date2);
-		return expenseRepo.getExpensesBetween(date1, date2);
+	public Iterable<Expense> getExpensesByMonth(String id, int month, int year) {
+		Date date1 = new Date(year - 1900, month, 1);
+		Date date2 = new Date(year - 1900, month + 1, 0);
+		System.out.println(date1 + " AND " + date2);
+		return expenseRepo.getExpensesBetween(id, date1, date2);
+	}
+
+
+	public Iterable<Expense> getExpensesByYear(String id, int year) {
+		Date date1 = new Date(year - 1900, 0, 1);
+		Date date2 = new Date(year - 1900, 11, 31);
+		System.out.println(date1 + " AND " + date2);
+		return expenseRepo.getExpensesBetween(id, date1, date2);
+	}
+
+	public List<MonthlyReport> getMonthlyExpenses(String id, int year) {
+		String[] monthNames = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
+		List<MonthlyReport> output = new ArrayList<MonthlyReport>();
+		for (int i = 0; i < 12; i ++) {
+			Iterable<Expense> monthlyExpense = getExpensesByMonth(id, i, year);
+			double sum = 0;
+			for (Expense e : monthlyExpense) 
+				sum += e.getAmount();
+			output.add(new MonthlyReport(monthNames[i], sum));
+		}
+		return output;
 	}
     
 }
