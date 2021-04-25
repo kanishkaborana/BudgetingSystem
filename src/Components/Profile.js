@@ -5,6 +5,7 @@ import { API_URL_UPDATE_USER, API_URL_USERS } from '../config'
 import Navbar from './Navbar'
 import {Form, Button, Col, InputGroup} from 'react-bootstrap'
 import AdminNavbar from './AdminNavbar'
+import { Redirect } from 'react-router'
 
 export default class Profile extends Component {
 
@@ -13,6 +14,7 @@ export default class Profile extends Component {
         this.state = {
             user : {},
             userType: this.props.location.state["userType"],
+            editted : false,
             errors: {}
         }
         this.handleChange = this.handleChange.bind(this);
@@ -23,17 +25,18 @@ export default class Profile extends Component {
         let {username} = this.props.match.params
         axios.get(API_URL_USERS + '/' + username)
         .then((response) => {
-            this.setState({user: response.data})
+            this.setState({editted : false, user: response.data})
         })
     }
 
     handleChange(event) {
         let user = this.state.user;
         user[event.target.name] = event.target.value;
-        this.setState({user : user});
+        this.setState({editted : false, user : user});
     }
 
     handleSubmit(event) {
+        console.log(this.state)
         event.preventDefault()
         if (this.validate()) {
             event.preventDefault()
@@ -51,7 +54,7 @@ export default class Profile extends Component {
                 let errors = this.state.errors
                 if (response.data === "User updated"){ 
                     errors["update"] = "Profile successfully updated!"
-                    this.setState({errors: errors})
+                    this.setState({editted : true, errors: errors})
                 }})
     
         }
@@ -89,8 +92,9 @@ export default class Profile extends Component {
     render() {
         return (
             <div>
-                {this.state.userType === "customer" ? 
-                    <Navbar user = {this.state.user["userID"]} userType = {this.state.userType}/> : <AdminNavbar user = {this.state.user["userID"]} userType = {this.state.userType}></AdminNavbar> }
+                {(this.state.userType === "customer") ? <Navbar user = {this.state.user["userID"]} userType = {this.state.userType}/> : <AdminNavbar user = {this.state.user["userID"]} userType = {this.state.userType}></AdminNavbar> }
+                {this.state.editted && (<Redirect to= {{ pathname: '/Dashboard', state: {user: this.state.user["userID"], userType: this.state.userType} }} />) }
+
                 <h1>Edit Profile</h1>
                 <Form onSubmit = {this.handleSubmit}>
                 <Form.Row>

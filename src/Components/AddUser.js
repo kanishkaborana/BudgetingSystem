@@ -1,12 +1,9 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
 import '../Styles/Custom.scss'
 import {Form, Button, Col, InputGroup, ToggleButtonGroup, ToggleButton} from 'react-bootstrap'
-import { Redirect } from 'react-router'
 import axios from 'axios'
 import {API_URL} from '../config'
 import AdminNavbar from './AdminNavbar'
-import { ThemeConsumer } from 'react-bootstrap/esm/ThemeProvider'
 
 
 class AddUser extends React.Component {

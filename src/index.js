@@ -28,7 +28,6 @@ ReactDOM.render(
     <Route path = "/Profile/:username" exact component = {Profile}/>
     <Route path = "/EditUser" exact component = {EditUser}/>
     <Route path = "/Register/Success" exact render = {(props) => <LoadingPage {...props} status = "Successfully Registered" button = "/" buttonText = "Return to login"/>}/>
-    <Route path = "/AddExpense/Success" exact render = {(props) => <LoadingPage {...props} status = "Successfully added" button = "/" buttonText = "Return to Home" />}/>
   </BrowserRouter>,
   document.getElementById('root')
 );

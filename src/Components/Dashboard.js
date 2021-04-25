@@ -1,11 +1,9 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
 import Navbar from './Navbar'
 import AdminNavbar from './AdminNavbar'
 import axios from 'axios'
 import {API_URL_USERS, API_URL_USER_DELETE, API_URL } from '../config'
 import {Table} from 'react-bootstrap'
-import {Link, Redirect} from 'react-router-dom'
 import { Chart } from "react-google-charts";
 
 class Dashboard extends React.Component {
@@ -136,19 +134,19 @@ class Dashboard extends React.Component {
             }
         });
         let arr = [['Category', 'Amount'], 
-            foodTotal == 0 ? ['', ''] : ['Food', foodTotal],
-            rentTotal == 0 ? ['', ''] : ['Rent/Mortgage', rentTotal],
-            entertainmentTotal == 0 ? ['', ''] : ['Entertainment', entertainmentTotal],
-            utilityTotal == 0 ? ['', ''] : ['Utility', utilityTotal],
-            groceriesTotal == 0 ? ['', ''] : ['Groceries', groceriesTotal],
-            businessTotal == 0 ? ['', ''] : ['Business', businessTotal],
-            otherTotal == 0 ? ['', ''] : ['Other', otherTotal] ];
+            foodTotal === 0 ? ['', ''] : ['Food', foodTotal],
+            rentTotal === 0 ? ['', ''] : ['Rent/Mortgage', rentTotal],
+            entertainmentTotal === 0 ? ['', ''] : ['Entertainment', entertainmentTotal],
+            utilityTotal === 0 ? ['', ''] : ['Utility', utilityTotal],
+            groceriesTotal === 0 ? ['', ''] : ['Groceries', groceriesTotal],
+            businessTotal === 0 ? ['', ''] : ['Business', businessTotal],
+            otherTotal === 0 ? ['', ''] : ['Other', otherTotal] ];
         return arr;
     }
 
     getExpenseGraph() {
 
-        if(this.state.expenses.length != 0) {
+        if(this.state.expenses.length !== 0) {
             return (
                 <Chart
                     width={'1000px'}
@@ -187,7 +185,7 @@ class Dashboard extends React.Component {
 
     getCategoricalPieGraph() {
 
-        if(this.state.expenses.length != 0) {
+        if(this.state.expenses.length !== 0) {
             return (
                 <Chart
                     width={'1000px'}
@@ -329,7 +327,7 @@ class Dashboard extends React.Component {
                 tax_bracket = 0.37;
             }
         }
-        let tax_brack_statement="Your tax bracket is " + tax_bracket;
+        //let tax_brack_statement="Your tax bracket is " + tax_bracket;
         return(
             <div>
                 <hr/>
