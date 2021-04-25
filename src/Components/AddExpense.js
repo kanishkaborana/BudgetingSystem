@@ -79,11 +79,13 @@ class AddExpense extends React.Component {
         // handling category 
         if(input["category"] === "" || input["category"] === null){
             errors["category"] = "Please select a category."
+            valid = false;
         }
 
         //handling date error
         if (dateAdded > today){
             errors["dateError"] = "Date cannot be a future date."
+            valid = false;
         }
         else {
             errors["dateError"] = ""
