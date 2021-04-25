@@ -15,14 +15,16 @@ class Dashboard extends React.Component {
             userType: this.props.location.state["userType"],
             user: {},
             customers: [{}],
-            expenses: [{}]
+            expenses: [{}],
+            monthlyReport: [{}]
         }
         this.getCustomersTable = this.getCustomersTable.bind(this)
-        this.getExpenseGraph = this.getExpenseGraph.bind(this)
         this.handleDelete = this.handleDelete.bind(this)
     }
 
     componentDidMount() {
+        let date = new Date()
+        
         if (this.state.userType === "admin") {
             axios.get(API_URL_USERS)
             .then((response) => {
@@ -35,9 +37,15 @@ class Dashboard extends React.Component {
                 this.setState({user: response.data})
             })
             
-            axios.get(API_URL + "/expense/" + this.state.userID)
+            axios.get(API_URL + "/expenses/" + this.state.userID + "/year/" + date.getFullYear())
             .then((response) => {
                 this.setState({expenses: response.data})
+                console.log(response.data)
+            })
+
+            axios.get(API_URL + "/expenses/" + this.state.userID + "/monthly/" + date.getFullYear())
+            .then((response) => {
+                this.setState({monthlyReport: response.data})
             })
         }
     }
@@ -91,11 +99,12 @@ class Dashboard extends React.Component {
             </div>
         )
     }
-    
-    updatePieData() {
-        let array = [['Expense', 'Amount']];
-        this.state.expenses.forEach(element => {
-            array.push([element.expenseTitle, element.amount])
+
+
+    updateMonthlyData() {
+        let array = [['Month', 'Amount']];
+        this.state.monthlyReport.forEach(element => {
+            array.push([element.month, element.amount])
         });
         return array
     }
@@ -144,18 +153,18 @@ class Dashboard extends React.Component {
         return arr;
     }
 
-    getExpenseGraph() {
 
-        if(this.state.expenses.length !== 0) {
+    getExpensesByMonth() {
+        if(this.state.expenses.length != 0) {
             return (
                 <Chart
                     width={'1000px'}
                     height={'700px'}
                     chartType="PieChart"
                     loader={<div>Loading Expense Chart</div>}
-                    data={this.updatePieData()}
+                    data={this.updateMonthlyData()}
                     options={{
-                        title: 'Expenses',
+                        title: 'Expenses By Month',
                         'backgroundColor': 'transparent',
                         pieHole: 0.4,
                         legend: {
@@ -342,9 +351,8 @@ class Dashboard extends React.Component {
 
 
     render() {
-        //console.log(this.state)
         const table = this.getCustomersTable()
-        const pieGraph = this.getExpenseGraph()
+        const monthlyPieChart = this.getExpensesByMonth()
         const monthlyReport = this.getMonthlyReport()
         const categoricalPieGraph = this.getCategoricalPieGraph()
         const date = new Date()
@@ -359,9 +367,15 @@ class Dashboard extends React.Component {
                         <Navbar user = {this.state.userID} userType = {this.state.userType}/>
                         <h2>Welcome, {this.state.userID}</h2>
                         <br></br>
-                        <h1>{monthNames[date.getMonth()]}'s Expense Chart</h1><hr/>
-                        {pieGraph}
-                        {categoricalPieGraph}
+                        <h1>Annual Budget Spread</h1><hr/>
+                        <table>
+                            <tr>
+                                <td>{monthlyPieChart}</td>
+                                <td>{categoricalPieGraph}</td>
+                            </tr>
+                        </table>
+                        
+                        <h2></h2>
                         {monthlyReport}
                         {this.printTaxBracket()}
                     </div>
