@@ -2,7 +2,6 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import '../Styles/Custom.scss'
 import {Form, Button, Col, InputGroup} from 'react-bootstrap'
-import { Redirect } from 'react-router'
 import axios from 'axios'
 import {API_URL} from '../config'
 import Navbar from './Navbar'
@@ -33,7 +32,7 @@ class AddExpense extends React.Component {
       
         this.setState({
             added: false,
-            input:input,
+            input: input,
             errors: this.state.errors
         });
     }
@@ -54,20 +53,12 @@ class AddExpense extends React.Component {
                 recurring: recurring
             }).then((response) => {
                 this.setState ({added: true, errors : {output: response.data}})
-                //console.log("clearing...")
-                //this.clear()
                 }
             )
         }
         ReactDOM.findDOMNode(this.messageForm).reset();
     } 
-    
-    /*
-    clear(){
-        this.form.reset()
-    }
-    */
-        
+     
     validate() {
         
         let valid = true;

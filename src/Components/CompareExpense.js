@@ -150,22 +150,23 @@ export default class CompareExpense extends Component {
 
     updateExpense1() {
         if (this.state.month1 != "") {
+            //Parse month and year from string
             let year = this.state.month1.substring(0,4)
             let month = parseInt(this.state.month1.substring(5,7)) - 1
             
-            console.log(API_URL_EXPENSES + "/" + this.state.userID + "/month/" + month + "/year/" + year)
             axios.get(API_URL_EXPENSES + "/" + this.state.userID + "/month/" + month + "/year/" + year)
             .then((response) => {
                 this.setState({expense1: response.data})
             })
-            console.log(this.state.expense1)
         }
     }
 
     updateExpense2() {
         if (this.state.month2 != "") {
+            //Parse month and year from string
             let year = this.state.month2.substring(0,4)
             let month = parseInt(this.state.month2.substring(5,7)) - 1
+
             axios.get(API_URL_EXPENSES + "/" + this.state.userID + "/month/" + month + "/year/" + year)
             .then((response) => {
                 this.setState({expense2: response.data})
@@ -174,17 +175,11 @@ export default class CompareExpense extends Component {
     }
 
     compare() {
-        console.log("clicked!")
         this.updateExpense1();
         this.updateExpense2();
     }
 
-    handleClick() {
-        console.log('hello world')
-    }
-
     render() {
-        let date = new Date()
         let graph1 = this.getExpenseGraph(this.state.expense1)
         let graph2 = this.getExpenseGraph(this.state.expense2)
         let graph1Category = this.getExpenseGraphCategory(this.state.expense1)
@@ -193,15 +188,15 @@ export default class CompareExpense extends Component {
         return (
             <div>
                 <Navbar user = {this.props.location.state["user"]} userType = {this.props.location.state["userType"]}/>
-              
-                <input type="button" value="Compare" onClick={this.compare.bind(this)}/>
-                
-
+       
                 <table> 
                     <tr>
                         <th>Month 1<input type="month" id="month1" name="month1" onChange={(event) => this.setState({month1: event.target.value})} required></input></th>
                         <th>Month 2<input type="month" id="month1" name="month1" onChange={(event) => this.setState({month2: event.target.value})} required></input></th>
                     </tr> 
+                    <tr>
+                        <td><input type="button" value="Compare" onClick={this.compare.bind(this)}/></td>
+                    </tr>
                     <tr> 
                         <td>{graph1}</td> 
                         <td>{graph2}</td> 

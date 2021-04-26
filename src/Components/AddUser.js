@@ -32,7 +32,7 @@ class AddUser extends React.Component {
             registered: false,
             input:input,
             errors: this.state.errors
-        });
+        })
     }
 
     handleSubmit(event) {
@@ -63,10 +63,10 @@ class AddUser extends React.Component {
                         this.setState ({registered: true, input : {filingStatus: "Single"}, errors : {output: response.data}})
                     }
                 
-                }
-                )
+                })
             }
             else {
+                //Adding an admin account
                 axios.post(API_URL + '/users/register', {
                     userID: this.state.input.username,
                     email: this.state.input["email"],
@@ -91,8 +91,7 @@ class AddUser extends React.Component {
                         this.setState ({registered: true, input : {filingStatus: "Single"}, errors : {output: response.data}})
                     }
                 
-                }
-                )
+                })
             }
         }
     }      
@@ -124,9 +123,11 @@ class AddUser extends React.Component {
             }
             if(input["filingStatus"] === "" || input["filingStatus"] === null){
                 errors["filingStatus"] = "Please select a filing status."
+                valid = false;
             }
             if (dob > today){
                 errors["birthdayError"] = "Birthday cannot be a future date."
+                valid = false;
             }
             else {
                 errors["birthdayError"] = ""

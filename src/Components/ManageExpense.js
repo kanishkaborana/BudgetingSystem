@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
 import axios from 'axios'
-import {API_URL, API_URL_EXPENSES, API_URL_EXPENSE, API_URL_EXPENSE_DELETE } from '../config'
+import { API_URL_EXPENSE, API_URL_EXPENSE_DELETE } from '../config'
 import {Table} from 'react-bootstrap'
-import {Link, Redirect} from 'react-router-dom'
 import Navbar from './Navbar'
 
 class ManageExpense extends Component {
@@ -18,7 +17,6 @@ class ManageExpense extends Component {
     }
 
     componentDidMount() {
-        console.log(this.state)
         axios.get(API_URL_EXPENSE + "/" + this.state.userID)
         .then((response) => {
             this.setState({
@@ -36,14 +34,12 @@ class ManageExpense extends Component {
                     this.setState({
                         expenses: response.data
                     })       
-                    console.log(response.data)
                 })
         })
     }
 
     handleEdit(index) {
         let expenseID = document.getElementById("expenseID" + index).innerHTML
-        console.log("editting " + expenseID);
         this.props.history.push({pathname: '/EditExpense', state: {expenseID: expenseID, userID: this.state.userID, userType: this.state.userType}})
     }
 
@@ -71,7 +67,7 @@ class ManageExpense extends Component {
                                 <td>{element.expenseTitle}</td>                                        <td>{element.dateAdded}</td>
                                 <td>{element.amount}</td>
                                 <td>{element.category}</td>
-                                <td>{element.recurring === "1" ? "Yes" : "No" }</td>
+                                <td>{element.recurring == 1 ? "Yes" : "No" }</td>
                                 <td><button type="button" name="" id="" class="btn btn-primary" btn-lg btn-block onClick = {() => this.handleEdit(index)}>Edit</button></td>
                                 <td><button type="button" name="" id="" class="btn btn-primary" btn-lg btn-block onClick = {() => this.handleDelete(index)}>Delete</button></td>
                             </tr>

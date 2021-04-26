@@ -47,9 +47,6 @@ class AdminNavbar extends React.Component {
                                 Logout <span ><img src={logoutIcon} style = {{height: 30, width: 30}}></img></span>
                                 </a>
                             </Link>
-                            {/* <button class="btn" style = {{color: "white"}} onSubmit = {this.handleSubmit} >
-                                    
-                            </button> */}
                         
                         </form>
                     </div>

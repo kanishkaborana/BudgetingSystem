@@ -1,8 +1,6 @@
 import React, { Component } from 'react'
-import { useState } from 'react'
 import axios from 'axios'
 import { API_URL_UPDATE_USER, API_URL_USERS } from '../config'
-import Navbar from './Navbar'
 import {Form, Button, Col, InputGroup} from 'react-bootstrap'
 import AdminNavbar from './AdminNavbar'
 

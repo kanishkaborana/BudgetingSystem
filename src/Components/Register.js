@@ -1,5 +1,4 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
 import '../Styles/Custom.scss'
 import {Form, Button, Col, InputGroup} from 'react-bootstrap'
 import { Redirect } from 'react-router'
@@ -64,8 +63,7 @@ class Register extends React.Component {
                     this.setState ({registered: true, input : {}, errors : {}})
                 }
             
-            }
-            )     
+            })     
         }
     }      
     
@@ -77,6 +75,7 @@ class Register extends React.Component {
         let errors = this.state.errors;
         let dob = new Date(input["dob"])
         let today = new Date()
+        
         if(input["password"] !== input["confirmPassword"]){
                 errors["confirmPassword"] = "Passwords don't match.";
                 valid = false;

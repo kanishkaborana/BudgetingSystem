@@ -36,8 +36,8 @@ export default class Profile extends Component {
     }
 
     handleSubmit(event) {
-        console.log(this.state)
         event.preventDefault()
+
         if (this.validate()) {
             event.preventDefault()
             axios.post(API_URL_UPDATE_USER, {
@@ -85,7 +85,6 @@ export default class Profile extends Component {
         }
     
         this.setState({user: user, errors:errors});
-        console.log(valid)
         return valid;
     }
 

@@ -17,7 +17,6 @@ public class UserService {
 	public User getUserByID(String id) {
 		try {
 			User myUser = userRepo.findById(id).get();
-			System.out.println(myUser);
 			return myUser;
 		}
 		catch (NoSuchElementException nse) {
@@ -26,7 +25,6 @@ public class UserService {
 	}
 	
 	public void addUser(User user) {
-		System.out.println(user);
 		userRepo.save(user);
 		
 	}

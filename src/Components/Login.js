@@ -1,9 +1,5 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
-import Link, { Redirect } from 'react-router-dom'
-import axios from 'axios'
 import '../Styles/Custom.scss'
-import Register from './Register'
 import {Form, Button} from 'react-bootstrap'
 
 class Login extends React.Component {
@@ -37,15 +33,11 @@ class Login extends React.Component {
 
     handleSubmit(event) {
         event.preventDefault();
-        
         this.setState({
             userID: this.state.userID,
             password: this.state.password
         });
-
         this.props.Login({userID: this.state.userID, password: this.state.password})
-       
-               
     }
 
     render(){

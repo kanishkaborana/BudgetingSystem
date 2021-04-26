@@ -58,7 +58,6 @@ public class UserController {
 	@CrossOrigin(origins = "http://localhost:8080")
 	@PostMapping(value = "/users/update")
 	public @ResponseBody String update(@RequestBody User newUser) {
-		System.out.println(newUser);
 		return userService.update(newUser);
 	}
 

@@ -21,13 +21,10 @@ export default class EditExpense extends Component {
     }
 
     componentDidMount() {
-        console.log(this.state)
-        console.log(API_URL_EXPENSES + '/' + this.props.location.state["expenseID"])
         axios.get(API_URL_EXPENSES + '/' + this.props.location.state["expenseID"])
         .then((response) => {
             this.setState({editted:false, input: response.data})
-            console.log(this.state.input)
-            this.state.input["recurring"] === "1" ? document.getElementById("recurring").checked = true : document.getElementById("recurring").checked = false
+            this.state.input["recurring"] == 1 ? (document.getElementById("recurring").checked = true) : (document.getElementById("recurring").checked = false)
         })
     }
 
@@ -51,17 +48,14 @@ export default class EditExpense extends Component {
     }
 
     handleSubmit(event) {
-        //let recurring = 0
         event.preventDefault()
-        console.log(this.state.input)
+        let recurring = 0;
+
         if (this.validate()) {
             event.preventDefault()
-            /*
-            if(document.getElementById("recurring").checked){
+            if(document.getElementById("recurring").checked)
                 recurring = 1;
-            }
-            */
-            //console.log(recurring)
+            
             axios.post(API_URL_UPDATE_EXPENSE, {
                 expenseID: this.state.input["expenseID"],
                 userID: this.state.input["userID"],
@@ -69,12 +63,12 @@ export default class EditExpense extends Component {
                 category: this.state.input["category"],
                 dateAdded: this.state.input["dateAdded"],
                 expenseTitle: this.state.input["expenseTitle"],
-                recurring: this.state.input["recurring"],
+                recurring: this.state.input["recurring"]
             }).then((response) => {
                 let errors = this.state.errors
                 if (response.data === "Expense updated"){ 
                     errors["output"] = "Expense successfully updated!"
-                    this.setState({ editted:true, errors: errors})
+                    this.setState({ editted: true, errors: errors})
                 }
             })
         }
@@ -160,10 +154,10 @@ export default class EditExpense extends Component {
                     </Form.Row>
 
                     <Form.Row>
-                            <Form.Group as={Col} controlId="formRecurring">
-                                <Form.Check inline label="Recurring" id="recurring" name = "recurring" onChange = {this.handleChange} />
-                            </Form.Group>
-                        </Form.Row>
+                        <Form.Group as={Col} controlId="formRecurring">
+                            <Form.Check inline label="Recurring" id="recurring" name = "recurring" onChange = {this.handleChange} />
+                        </Form.Group>
+                    </Form.Row>
 
                     <Form.Group className = "btn1">
                         <Button variant="primary" type="submit">
@@ -179,6 +173,3 @@ export default class EditExpense extends Component {
         )
     }
 }
-
-
-//export default EditExpense;

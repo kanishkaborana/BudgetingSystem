@@ -33,7 +33,6 @@ public class ExpenseController {
 
 	@RequestMapping("/expense/{userID}")
 	public Iterable<Expense> getExpenseByUserID(@PathVariable String userID) {
-		System.out.println(expenseService.getExpensesByUserID(userID));
 		return expenseService.getExpensesByUserID(userID);
 	}
 		
@@ -64,7 +63,6 @@ public class ExpenseController {
 	@CrossOrigin(origins = "http://localhost:8080")
 	@PostMapping(value = "/expenses/update")
 	public @ResponseBody String update(@RequestBody Expense newExpense) {
-		System.out.println(newExpense);
 		return expenseService.update(newExpense);
 	}
 

@@ -24,7 +24,7 @@ class Dashboard extends React.Component {
 
     componentDidMount() {
         let date = new Date()
-        
+        //Fetch data from api
         if (this.state.userType === "admin") {
             axios.get(API_URL_USERS)
             .then((response) => {
@@ -40,7 +40,6 @@ class Dashboard extends React.Component {
             axios.get(API_URL + "/expenses/" + this.state.userID + "/year/" + date.getFullYear())
             .then((response) => {
                 this.setState({expenses: response.data})
-                console.log(response.data)
             })
 
             axios.get(API_URL + "/expenses/" + this.state.userID + "/monthly/" + date.getFullYear())
@@ -77,8 +76,8 @@ class Dashboard extends React.Component {
                             <th>Email</th>
                             <th>First Name</th>
                             <th>Last Name</th>
-                            <th></th>
-                            <th></th>
+                            <th>Edit Customer</th>
+                            <th>DeleteCustomer</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -355,10 +354,7 @@ class Dashboard extends React.Component {
         const monthlyPieChart = this.getExpensesByMonth()
         const monthlyReport = this.getMonthlyReport()
         const categoricalPieGraph = this.getCategoricalPieGraph()
-        const date = new Date()
-        const monthNames = ["January", "February", "March", "April", "May", "June",
-        "July", "August", "September", "October", "November", "December"];
-
+        
         return (
             <div>
                 

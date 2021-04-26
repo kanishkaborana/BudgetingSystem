@@ -18,15 +18,12 @@ function App() {
       userID: credentials.userID,
       password: credentials.password})
         .then((response) => {
-            //let newLoggedIn = false;
             if (response.data === "Customer Permission Granted") {
               setUserType("customer")
-              //newLoggedIn = true;
               setUser(credentials.userID)
             }
             else if (response.data === "Admin Permission Granted") {
               setUserType("admin")
-              //newLoggedIn = true;
               setUser(credentials.userID)
             }
             else

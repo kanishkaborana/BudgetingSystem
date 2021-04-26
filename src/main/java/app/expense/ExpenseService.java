@@ -21,7 +21,6 @@ public class ExpenseService {
 	public Expense getExpenseByID(Integer id) {
 		try {
 			Expense myExpense = expenseRepo.findById(id).get();
-			System.out.println(myExpense);
 			return myExpense;
 		}
 		catch (NoSuchElementException nse) {
@@ -35,7 +34,6 @@ public class ExpenseService {
 	}
 
 	public void addExpense(Expense expense) {
-		System.out.println(expense);
 		expenseRepo.save(expense);
 		
 	}
@@ -66,6 +64,7 @@ public class ExpenseService {
 		updateExpense.setCategory(expense.getCategory());
 		updateExpense.setUserID(expense.getUserID());
 		updateExpense.setDateAdded(expense.getDateAdded());
+		updateExpense.setRecurring(expense.getRecurring());
 		expenseRepo.save(updateExpense);
 		return "Expense updated";
 	}
@@ -73,7 +72,6 @@ public class ExpenseService {
 	public Iterable<Expense> getExpensesByMonth(String id, int month, int year) {
 		Date date1 = new Date(year - 1900, month, 1);
 		Date date2 = new Date(year - 1900, month + 1, 0);
-		System.out.println(date1 + " AND " + date2);
 		return expenseRepo.getExpensesBetween(id, date1, date2);
 	}
 
@@ -81,7 +79,6 @@ public class ExpenseService {
 	public Iterable<Expense> getExpensesByYear(String id, int year) {
 		Date date1 = new Date(year - 1900, 0, 1);
 		Date date2 = new Date(year - 1900, 11, 31);
-		System.out.println(date1 + " AND " + date2);
 		return expenseRepo.getExpensesBetween(id, date1, date2);
 	}
 
