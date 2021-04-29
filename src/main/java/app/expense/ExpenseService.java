@@ -151,6 +151,7 @@ public class ExpenseService {
 				sum += e.getAmount();
 			output.add(new MonthlyReport(monthNames[i], sum));
 		}
+		System.out.println(output);
 		return output;
 	}
     

@@ -54,6 +54,7 @@ class Dashboard extends React.Component {
             // API call to fetch expenses for the current month
             axios.get(API_URL + "/expenses/" + this.state.userID + "/monthly/" + date.getFullYear())
             .then((response) => {
+                console.log(response.data)
                 this.setState({monthlyReport: response.data})
             })
         }

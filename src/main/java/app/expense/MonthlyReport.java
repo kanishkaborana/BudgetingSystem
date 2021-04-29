@@ -33,7 +33,7 @@ public class MonthlyReport {
     /**
     Retrieves the month a report was created for
     @return month the month a report was created for
-    /*
+    **/
     public String getMonth() {
         return this.month;
     }
