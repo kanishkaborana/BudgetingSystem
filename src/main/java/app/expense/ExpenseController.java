@@ -136,10 +136,10 @@ public class ExpenseController {
 	}
     
   	/**
-    Retrieves all of a user's expenses in each month of a year, in the format of a monthly report 
+    Retrieves the sum of all of a user's expenses in each month of a year\
     @param id the id of the user whose expenses are to be retrieved
     @param year the year to retrieve expenses from 
-    @return all of a user's expenses for the given year, broken down by month
+    @return the total expenses of the user in each month of the chosen year
     */
 	@CrossOrigin(origins = "http://localhost:8080")
 	@RequestMapping(value = "/expenses/{id}/monthly/{year}")
