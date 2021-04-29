@@ -13,7 +13,7 @@ public interface ExpenseRepository extends CrudRepository<Expense, Integer> {
     
     /**
     Retrieves all expenses of a specified user
-    @param userID the identification number of the user whose expenses are
+    @param userID the identification of the user whose expenses are
     to be retrieved
     */
     @Query(value = "SELECT * FROM budgeting_system.expense WHERE userID = (:userID)", nativeQuery = true)
@@ -21,7 +21,7 @@ public interface ExpenseRepository extends CrudRepository<Expense, Integer> {
     
     /**
     Retrieves all expenses a user added between two dates
-    @param userID the identification number of the user whose expenses are
+    @param userID the identification of the user whose expenses are
     to be retrieved
     @param date1 the earliest date to retrieve expenses from
     @param date2 the latest date to retrieve expenses from
