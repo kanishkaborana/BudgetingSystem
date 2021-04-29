@@ -43,7 +43,7 @@ public class ExpenseService {
 	
 	/**
     Retrieves all expenses of a specified user
-    @param userID the identification number of the user whose expenses are
+    @param userID the ID of the user whose expenses are
     to be retrieved
     @return all expenses of the user with the given id
     */
@@ -112,7 +112,7 @@ public class ExpenseService {
 	
   	/**
     Retrieves all of a user's expenses in a selected month
-    @param id the id of the user whose expenses are to be retrieved
+    @param id the ID of the user whose expenses are to be retrieved
     @param year the year the month to retrieve expenses from was in
     @param month the month to retrieve expenses from 
     @return all of a user's expenses for the given month
@@ -125,7 +125,7 @@ public class ExpenseService {
 
 	/**
     Retrieves all of a user's expenses in a selected year
-    @param id the id of the user whose expenses are to be retrieved
+    @param id the ID of the user whose expenses are to be retrieved
     @param year the year to retrieve expenses from 
     @return all of a user's expenses for the given year
     */
@@ -137,7 +137,7 @@ public class ExpenseService {
 	
   	/**
     Retrieves the sum of all of a user's expenses in each month of a year\
-    @param id the id of the user whose expenses are to be retrieved
+    @param id the ID of the user whose expenses are to be retrieved
     @param year the year to retrieve expenses from 
     @return output the total expenses of the user in each month of the chosen year
     */
