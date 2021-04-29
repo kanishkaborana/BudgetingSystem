@@ -6,10 +6,15 @@ import {API_URL} from '../config'
 import AdminNavbar from './AdminNavbar'
 
 
+/*
+    Add User Component. Only used by admin account
+    Contains the functions and JSX for the add user webpage
+*/
 class AddUser extends React.Component {
 
     constructor(){
         super();
+        // Default state
         this.state = {
             registered: false,
             input: {filingStatus: "Single"},
@@ -19,26 +24,33 @@ class AddUser extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
+    // Function to take action once component loads. Stores user type as customer by default
     componentDidMount () {
         let input = this.state.input
         input["userType"] = "customer"
-        this.setState({registered: false, input:input, errors:this.state.errors})
+        this.setState({
+            registered: false, input:input, errors:this.state.errors
+        })
     }
 
+    // Function to read user input and update state
     handleChange(event) {
         let input = this.state.input;
         input[event.target.name] = event.target.value;
+
         this.setState({
             registered: false,
             input:input,
             errors: this.state.errors
-        })
+        });
     }
 
+    // Function to handle user form submission. Calls the API to add a customer account
     handleSubmit(event) {
         event.preventDefault();
         if (this.validate()) {
             if (this.state.input["userType"] === 'customer') {
+                // Call API
                 axios.post(API_URL + '/users/register', {
                     userID: this.state.input.username,
                     email: this.state.input["email"],
@@ -50,6 +62,7 @@ class AddUser extends React.Component {
                     annIncome: this.state.input["annualIncome"],
                     filingStatus: this.state.input["filingStatus"]
                 }).then((response) => {
+                    // Customer already exists
                     if (response.data === 'User exists') { 
                         this.state.errors.usernameExists = "Username exists, try a different one."
                         this.state.errors["output"] = response.data
@@ -78,6 +91,7 @@ class AddUser extends React.Component {
                     annIncome: 0,
                     filingStatus: "Single"
                 }).then((response) => {
+                    // Admin exists
                     if (response.data === 'User exists') { 
                         this.state.errors.usernameExists = "Username exists, try a different one."
                         this.state.errors["output"] = response.data
@@ -96,7 +110,8 @@ class AddUser extends React.Component {
         }
     }      
     
-    
+    // Function to validate user inpur before submitting form
+    // Checks if password and email are confirmed, dob is not a future date, and filing status is selected
     validate() {
         
         let valid = true;
@@ -149,12 +164,12 @@ class AddUser extends React.Component {
                 errors["confirmEmail"] = "";
             }
         }
-    
+        // Update errors state
         this.setState({errors:errors});
         return valid;
     }
 
-
+    // Render function containing JSX and HTML
     render() {
         return(
         <div >

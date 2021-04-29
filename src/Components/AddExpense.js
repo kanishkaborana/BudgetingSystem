@@ -6,11 +6,15 @@ import axios from 'axios'
 import {API_URL} from '../config'
 import Navbar from './Navbar'
 
-
+/*
+    Add Expense Component.
+    Contains the functions and JSX for the add expense webpage
+*/
 class AddExpense extends React.Component {
 
     constructor(props){
         super(props);
+        // Default state
         this.state = {
             added: false,
             input: {userID: this.props.location.state["user"]},
@@ -20,12 +24,14 @@ class AddExpense extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
+    // Actions to take once component loads. Stores category as the default value in select option
     componentDidMount () {
         let input = this.state.input
         input["category"] = document.getElementById("category").value
         this.setState({added: false, input:input, errors:this.state.errors})
     }
 
+    // Function to read user input and update state
     handleChange(event) {
         let input = this.state.input;
         input[event.target.name] = event.target.value;
@@ -37,6 +43,7 @@ class AddExpense extends React.Component {
         });
     }
 
+    // Function to handle user form submission
     handleSubmit(event) {
         let recurring = 0;
         event.preventDefault();
@@ -44,6 +51,7 @@ class AddExpense extends React.Component {
             if(document.getElementById("recurring").checked){
                 recurring = 1;
             }
+            // Call API
             axios.post(API_URL + '/expenses/added', {
                 userID: this.state.input.userID,
                 amount: this.state.input["amount"],
@@ -56,9 +64,12 @@ class AddExpense extends React.Component {
                 }
             )
         }
+        // Reset form
         ReactDOM.findDOMNode(this.messageForm).reset();
     } 
      
+    // Function to validate user input before submitting form
+    // Checks if category is selected and dateAdded is not a future date
     validate() {
         
         let valid = true;
@@ -86,7 +97,7 @@ class AddExpense extends React.Component {
         return valid;
     }
 
-
+    // Render function containing JSX and HTML
     render() {
         return(
             <div>
