@@ -5,13 +5,17 @@ import plusIcon from './Images/plus-icon.svg'
 import profileIcon from './Images/profile-icon.svg'
 import { Link } from 'react-router-dom'
 
-
+/*
+    Admin Navbar Component.
+    Contains the menu for the admin navbar and appropriate links
+*/
 class AdminNavbar extends React.Component {
 
     constructor(props){
         super(props)
     }
-
+    
+    // Render function containging JSX and HTML
     render(){
        
         return (

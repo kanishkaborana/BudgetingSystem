@@ -6,6 +6,13 @@ import {API_URL_USERS, API_URL_USER_DELETE, API_URL } from '../config'
 import {Table} from 'react-bootstrap'
 import { Chart } from "react-google-charts";
 
+
+/*
+    Dashboard Component.
+    Contains the functions and JSX for the dashboard page.
+    Displays the correct output depending on the user that is logged in,
+    admin or customer.
+*/
 class Dashboard extends React.Component {
 
     constructor(props) {
@@ -22,9 +29,11 @@ class Dashboard extends React.Component {
         this.handleDelete = this.handleDelete.bind(this)
     }
 
+    // Function to take action once component loads. Fetches user data and expense
+    // data for the user from the API.
     componentDidMount() {
         let date = new Date()
-        //Fetch data from api
+        // Fetch data from api
         if (this.state.userType === "admin") {
             axios.get(API_URL_USERS)
             .then((response) => {
@@ -32,16 +41,17 @@ class Dashboard extends React.Component {
             })
         }
         else if (this.state.userType === "customer") {
+            // API call to fetch the user data
             axios.get(API_URL_USERS + '/' + this.state.userID)
             .then((response) => {
                 this.setState({user: response.data})
             })
-            
+            // API call to fetch the user expenses for the current year
             axios.get(API_URL + "/expenses/" + this.state.userID + "/year/" + date.getFullYear())
             .then((response) => {
                 this.setState({expenses: response.data})
             })
-
+            // API call to fetch expenses for the current month
             axios.get(API_URL + "/expenses/" + this.state.userID + "/monthly/" + date.getFullYear())
             .then((response) => {
                 this.setState({monthlyReport: response.data})
@@ -49,8 +59,10 @@ class Dashboard extends React.Component {
         }
     }
 
+    // Function to delete the user from the row selected by an admin
     handleDelete(index) {
         let userID = document.getElementById("userID" + index).innerHTML
+        // API call to delete the user
         axios.delete(API_URL_USER_DELETE + '/' + userID)
         .then((response) => {
             //update customers table
@@ -61,11 +73,14 @@ class Dashboard extends React.Component {
         })
     }
 
+    // Function to redirect the user to the Edit User component that will allow the
+    // admin to edit the user they selected.
     handleEdit(index) {
         let userID = document.getElementById("userID" + index).innerHTML
         this.props.history.push({pathname: '/EditUser', state: {admin: this.state.userID, user: userID}})
     }
 
+    // Function to display a table of all the users in the database
     getCustomersTable() {
         return (
             <div>
@@ -99,7 +114,9 @@ class Dashboard extends React.Component {
         )
     }
 
-
+    // Function to parse the expenses in the state and return a 2D array containing
+    // the month and the total expense amount for that month. 
+    // Ex: [["January", 1000], ["February", 2000],...]
     updateMonthlyData() {
         let array = [['Month', 'Amount']];
         this.state.monthlyReport.forEach(element => {
@@ -108,6 +125,9 @@ class Dashboard extends React.Component {
         return array
     }
     
+    // Function to parse the expenses in the state and return a 2D array containing
+    // the expense category sum 
+    // Ex: [["January", 1000], ["February", 2000],...]
     updateCategoricalPieData() {
         let rentTotal = 0;
         let entertainmentTotal = 0;
@@ -116,8 +136,9 @@ class Dashboard extends React.Component {
         let businessTotal = 0;
         let groceriesTotal = 0;
         let otherTotal = 0;
+        // Loop through the expenses array
         this.state.expenses.forEach(element => {
-            
+            // Check expense category
             switch(element.category) {
                 case "Food":
                     foodTotal += element.amount
@@ -152,7 +173,7 @@ class Dashboard extends React.Component {
         return arr;
     }
 
-
+    // Function to return a pie chart containing expenses by the month of the current year
     getExpensesByMonth() {
         if(this.state.expenses.length != 0) {
             return (
@@ -191,6 +212,7 @@ class Dashboard extends React.Component {
         }
     }
 
+    // Function to return a pie chart containing expenses by category
     getCategoricalPieGraph() {
 
         if(this.state.expenses.length !== 0) {
@@ -230,7 +252,7 @@ class Dashboard extends React.Component {
         }    
     }
     
-
+    // Function to get the year budget spending for the customer
     getMonthlyReport() {
         let total = 0;
         this.state.expenses.forEach(element => {
@@ -246,6 +268,8 @@ class Dashboard extends React.Component {
         )
     }
 
+    // Function to get the tax bracket for a customer depending on their filing status and
+    // annual income
     printTaxBracket(){
         //Based on 2019 tax data
         let tax_bracket;
@@ -348,7 +372,7 @@ class Dashboard extends React.Component {
     }
             
 
-
+    // Function to render the dashbaord
     render() {
         const table = this.getCustomersTable()
         const monthlyPieChart = this.getExpensesByMonth()
@@ -357,7 +381,7 @@ class Dashboard extends React.Component {
         
         return (
             <div>
-                
+                {/* IF USER IS A CUSTOMER, RENDER THIS */}
                 {this.state.userType === "customer" ?
                     <div>
                         <Navbar user = {this.state.userID} userType = {this.state.userType}/>
@@ -375,7 +399,9 @@ class Dashboard extends React.Component {
                         {monthlyReport}
                         {this.printTaxBracket()}
                     </div>
-                : <div>
+                :
+                // IF USER IS AN ADMIN, RENDER THIS 
+                <div>
                     <AdminNavbar user = {this.state.userID} userType = {this.state.userType}/>
                     Welcome, {this.state.userID}<br></br>
                     CUSTOMERS:<br></br>
