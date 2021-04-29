@@ -53,7 +53,7 @@ public class UserController {
 	
   	/**
     Deletes a user
-    @param user the expense to delete
+    @param user the user to delete
     @return a message that the user was successfully deleted
     */
 	@RequestMapping(method = RequestMethod.DELETE, value = "/users/delete")
