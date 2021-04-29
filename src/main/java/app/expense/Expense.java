@@ -42,7 +42,7 @@ public class Expense {
 
   	/**
     Constructs a new expense, with parameters specified by the user.
-    @param userID the unique identification number that identifies a user
+    @param userID the unique identification of a user
     @param expenseTitle the title of the expense
     @param dateAdded the date the user added the expense
     @param amount the amount the user paid for the expense
@@ -77,16 +77,16 @@ public class Expense {
     }
   
   	/**
-    Retrieves the identification number of a user.
-    @return userID the identification number of a user as a string
+    Retrieves the unique identification of a user.
+    @return userID the ID of a user as a string
     */
     public String getUserID() {
         return userID;
     }
   
   	/**
-    Sets the identification number of a user to a given string
-    @param userID the new identification number of the user as a string
+    Sets the unique identification of a user to a given string
+    @param userID the new ID of the user as a string
     */
     public void setUserID(String userID) {
         this.userID = userID;
