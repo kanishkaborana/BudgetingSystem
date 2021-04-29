@@ -4,10 +4,16 @@ import { API_URL_UPDATE_USER, API_URL_USERS } from '../config'
 import {Form, Button, Col, InputGroup} from 'react-bootstrap'
 import AdminNavbar from './AdminNavbar'
 
+
+/*
+    Edit User Component.
+    Contains the functions and JSX for the edit user webpage
+*/
 export default class EditUser extends Component {
 
     constructor(props){
         super(props)
+        // Default state
         this.state = {
             admin: this.props.location.state["admin"],
             user : {userID: this.props.location.state["user"]},
@@ -18,24 +24,29 @@ export default class EditUser extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
+    // Actions to take once component loads. Retrieves user information.
     componentDidMount() {
+        // API call to retrieve user information from database
         axios.get(API_URL_USERS + '/' + this.state.user["userID"])
         .then((response) => {
             this.setState({user: response.data})
         })
     }
 
+    // Function to read user input and update state
     handleChange(event) {
         let user = this.state.user;
         user[event.target.name] = event.target.value;
         this.setState({user : user});
     }
 
+    // Function to handle user form submission
     handleSubmit(event) {
         event.preventDefault()
+        // Make sure form is valid
         if (this.validate()) {
             event.preventDefault()
-
+            // API call to update user information
             axios.post(API_URL_UPDATE_USER, {
                 userID: this.state.user["userID"],
                 email: this.state.user["email"],
@@ -56,6 +67,8 @@ export default class EditUser extends Component {
         }
     }
 
+    // Function to validate user input before submitting form
+    // Checks if user confirmed password, confirmed email, and selected a filing status
     validate() {
         let user = this.state.user
         let valid = true
@@ -85,7 +98,7 @@ export default class EditUser extends Component {
     }
 
     
-
+    // Render function containing JSX and HTML
     render() {
         return (
             <div>

@@ -7,10 +7,16 @@ import {Form, Button, Col, InputGroup} from 'react-bootstrap'
 import AdminNavbar from './AdminNavbar'
 import { Redirect } from 'react-router'
 
+
+/*
+    Profile Component.
+    Contains the functions and JSX for the user profile webpage
+*/
 export default class Profile extends Component {
 
     constructor(props){
         super(props)
+        // Default state
         this.state = {
             user : {},
             userType: this.props.location.state["userType"],
@@ -21,25 +27,33 @@ export default class Profile extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
+    // Actions to take once component loads in. Call the API to get the 
+    // user information
     componentDidMount() {
         let {username} = this.props.match.params
+        // API call to get the users information
         axios.get(API_URL_USERS + '/' + username)
         .then((response) => {
             this.setState({editted : false, user: response.data})
         })
     }
 
+    // Function to read user input and update state
     handleChange(event) {
         let user = this.state.user;
         user[event.target.name] = event.target.value;
-        this.setState({editted : false, user : user});
+        this.setState({
+            editted : false, user : user
+        });
     }
 
+    // Function to handle user form submission
     handleSubmit(event) {
         event.preventDefault()
-
+        // Make sure form is valid
         if (this.validate()) {
             event.preventDefault()
+            // Call the API to update user information
             axios.post(API_URL_UPDATE_USER, {
                 userID: this.state.user["userID"],
                 email: this.state.user["email"],
@@ -60,7 +74,8 @@ export default class Profile extends Component {
         }
     }
     
-
+    // Function to make sure form is valid. Makes sure that the user confirmed
+    // password, confirmed email, and selected a filing status
     validate() {
         let user = this.state.user;
         let valid = true
@@ -88,6 +103,7 @@ export default class Profile extends Component {
         return valid;
     }
 
+    // Render function containing JSX and HTML
     render() {
         return (
             <div>

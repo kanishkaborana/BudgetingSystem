@@ -4,7 +4,6 @@ Allows users of the Budgeting-System web application to control their Expenses.
 */
 package app.expense;
 
-import java.sql.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;

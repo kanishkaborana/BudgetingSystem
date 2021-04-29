@@ -5,11 +5,15 @@ import { Redirect } from 'react-router'
 import axios from 'axios'
 import {API_URL} from '../config'
 
-
+/*
+    Register Component.
+    Contains the functions and JSX for the user registration webpage
+*/
 class Register extends React.Component {
 
     constructor(){
         super();
+        // Default state
         this.state = {
             registered: false,
             input: {},
@@ -19,12 +23,16 @@ class Register extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
+    // Actions to take once component loads. Stores filing status into the state
     componentDidMount () {
         let input = this.state.input
         input["filingStatus"] = document.getElementById("filingStatus").value
-        this.setState({registered: false, input:input, errors:this.state.errors})
+        this.setState({
+            registered: false, input:input, errors:this.state.errors
+        })
     }
 
+    // Function to read user input and update state
     handleChange(event) {
         let input = this.state.input;
         input[event.target.name] = event.target.value;
@@ -36,9 +44,12 @@ class Register extends React.Component {
         });
     }
 
+    // Function to handle user form submission
     handleSubmit(event) {
         event.preventDefault();
+        // Make sure form is valid
         if (this.validate()) {
+            // Call the API to register the user
             axios.post(API_URL + '/users/register', {
                 userID: this.state.input.username,
                 email: this.state.input["email"],
@@ -67,7 +78,9 @@ class Register extends React.Component {
         }
     }      
     
-    
+    // Function to validate user input before submitting form
+    // Checks that user confirmed password, confirmed email, and dob is 
+    // not a future date
     validate() {
         
         let valid = true;
@@ -107,6 +120,7 @@ class Register extends React.Component {
     }
 
 
+    // Render function containing JSX and HTML
     render() {
         return(
         <div id="registerContainer">

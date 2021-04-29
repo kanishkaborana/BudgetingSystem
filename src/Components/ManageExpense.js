@@ -4,10 +4,16 @@ import { API_URL_EXPENSE, API_URL_EXPENSE_DELETE } from '../config'
 import {Table} from 'react-bootstrap'
 import Navbar from './Navbar'
 
+
+/*
+    Manage Component.
+    Contains the functions and JSX for the Manage Expense webpage
+*/
 class ManageExpense extends Component {
 
     constructor(props) {
         super(props);
+        // Default state
         this.state = {
             userID: this.props.location.state["user"],
             userType: this.props.location.state["userType"],
@@ -16,7 +22,10 @@ class ManageExpense extends Component {
         this.getExpensesTable = this.getExpensesTable.bind(this)
     }
 
+    // Actions to take once component loads in. Retrieves all expense for the  user
+    // from the API
     componentDidMount() {
+        // API call to get all the expenses for the user
         axios.get(API_URL_EXPENSE + "/" + this.state.userID)
         .then((response) => {
             this.setState({
@@ -24,11 +33,14 @@ class ManageExpense extends Component {
             })
     }
 
+    // Function to allow the customer to delete an expense from the expenses table
     handleDelete(index) {
+        // Get the expenseID from the row selected
         let expenseID = document.getElementById("expenseID" + index).innerHTML
+        // API call to delete the expense
         axios.delete(API_URL_EXPENSE_DELETE + '/' + expenseID)
         .then((response) => {
-            //update expenses table
+            // API call to update the expenses table
             axios.get(API_URL_EXPENSE + "/" + this.state.userID)
                 .then((response) => {   
                     this.setState({
@@ -38,11 +50,15 @@ class ManageExpense extends Component {
         })
     }
 
+    // Function to allow the customer to edit an expense from the expenses table
     handleEdit(index) {
+        // Get the expenseID from the row selected
         let expenseID = document.getElementById("expenseID" + index).innerHTML
+        // Redirect customer to the webpage that allows them to edit an expense
         this.props.history.push({pathname: '/EditExpense', state: {expenseID: expenseID, userID: this.state.userID, userType: this.state.userType}})
     }
 
+    // Function to render in the table containing all the user expenses
     getExpensesTable() {
             return (
                 <div>
@@ -75,11 +91,12 @@ class ManageExpense extends Component {
                         </tbody>
                     </Table>
                 </div>
-                )
-            }
+            )
+    }
     
 
 
+    // Render function containing the JSX and HTML
     render() {
         const table =  this.getExpensesTable()
         return (

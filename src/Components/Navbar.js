@@ -7,7 +7,10 @@ import editIcon from './Images/editIcon.svg'
 import compareIcon from './Images/compare.svg'
 import { Link } from 'react-router-dom'
 
-
+/*
+    Navbar Component meant for the customer.
+    Contains the menu for the customer navbar and appropriate links
+*/
 class Navbar extends React.Component {
 
     constructor(props){
@@ -15,7 +18,7 @@ class Navbar extends React.Component {
     }
 
     
-
+    // Render function containging JSX and HTML
     render(){
         return (
             

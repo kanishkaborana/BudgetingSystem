@@ -66,6 +66,7 @@ public class MonthlyReport {
     Returns a string representing a monthly report.
     @return a string displaying the month and amount of a report.
     */
-  	public void toString(){
+  	public String toString(){
     	return this.month + " "+this.amount;
+    }
 }

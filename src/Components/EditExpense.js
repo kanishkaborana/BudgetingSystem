@@ -5,10 +5,16 @@ import Navbar from './Navbar'
 import {Form, Button, Col, InputGroup} from 'react-bootstrap'
 import { Redirect } from 'react-router'
 
+
+/*
+    Edit Expense Component.
+    Contains the functions and JSX for the webpage that allows a customer to edit expenses
+*/
 export default class EditExpense extends Component {
 
     constructor(props){
         super(props)
+        // Default state
         this.state = {
             userID: this.props.location.state["userID"],
             userType: this.props.location.state["userType"],
@@ -20,42 +26,46 @@ export default class EditExpense extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
+    // Actions to take once component loads. Set eddited as false and set 
+    // recurring checkbox to appropriate value depending on state
     componentDidMount() {
+        // API call to get expense information
         axios.get(API_URL_EXPENSES + '/' + this.props.location.state["expenseID"])
         .then((response) => {
-            this.setState({editted:false, input: response.data})
+            this.setState({
+                editted:false, 
+                input: response.data
+            })
             this.state.input["recurring"] == 1 ? (document.getElementById("recurring").checked = true) : (document.getElementById("recurring").checked = false)
         })
     }
-
+    // Function to read user input and update state
     handleChange(event) {
-        console.log(this.state.input)
         let input = this.state.input;
     
         input[event.target.name] = event.target.value;
-
-
         
+        // Check recurring checkbox
         if (event.target.name == "recurring") {
             input["recurring"] = document.getElementById("recurring").checked ? 1 : 0
         }
         
-      
         this.setState({
-            editted:false,
+            editted: false,
             input: input
         });
     }
 
+    // Function to hanlde user form submission
     handleSubmit(event) {
         event.preventDefault()
         let recurring = 0;
-
+        // Make sure user input is valid
         if (this.validate()) {
             event.preventDefault()
             if(document.getElementById("recurring").checked)
                 recurring = 1;
-            
+            // API call to update expense information
             axios.post(API_URL_UPDATE_EXPENSE, {
                 expenseID: this.state.input["expenseID"],
                 userID: this.state.input["userID"],
@@ -74,6 +84,8 @@ export default class EditExpense extends Component {
         }
     }
 
+    // Function to validate user input before submitting form
+    // Checks if category is selected and dateAdded is not a future date
     validate() {
         let valid = true;
         let errors = {};
@@ -101,7 +113,7 @@ export default class EditExpense extends Component {
     }
 
     
-
+    // Render function containing JSX and HTML
     render() {
         return (
             <div>

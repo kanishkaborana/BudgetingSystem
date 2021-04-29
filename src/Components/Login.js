@@ -2,10 +2,16 @@ import React from 'react'
 import '../Styles/Custom.scss'
 import {Form, Button} from 'react-bootstrap'
 
-class Login extends React.Component {
 
+/*
+    Login Component.
+    Contains the functions and JSX for the login webpage
+*/
+class Login extends React.Component {
+    // props containing a login() that is used to authenticated user credentials
     constructor(props){
         super(props);
+        // Default state
         this.state = {
             userID: "",
             password: ""
@@ -15,6 +21,7 @@ class Login extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
+    // Function to read user input and update state
     handleChange(event) {
         let newUserID = this.state.userID
         let newPassword = this.state.password
@@ -31,15 +38,18 @@ class Login extends React.Component {
         
     }
 
+    // Function to handle user form submission
     handleSubmit(event) {
         event.preventDefault();
         this.setState({
             userID: this.state.userID,
             password: this.state.password
         });
+        // Call the login function referenced in the props
         this.props.Login({userID: this.state.userID, password: this.state.password})
     }
 
+    // Render function containing JSX and HTML
     render(){
         return(
             
