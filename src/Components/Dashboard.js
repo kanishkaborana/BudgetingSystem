@@ -54,7 +54,6 @@ class Dashboard extends React.Component {
             // API call to fetch expenses for the current month
             axios.get(API_URL + "/expenses/" + this.state.userID + "/monthly/" + date.getFullYear())
             .then((response) => {
-                console.log(response.data)
                 this.setState({monthlyReport: response.data})
             })
         }
@@ -262,9 +261,10 @@ class Dashboard extends React.Component {
         
         return (
             <div>
+                <h2>Yearly Spendings</h2>
                 <h2>Expenses: ${total}</h2><br/>
-                <h2>Income: ${(this.state.user.annIncome / 12).toFixed(2)}</h2><br/>
-                <h2>Savings: $ {((this.state.user.annIncome / 12) - total).toFixed(2)} </h2>
+                <h2>Income: ${(this.state.user.annIncome - 0.0).toFixed(2)}</h2><br/>
+                <h2>Savings: $ {((this.state.user.annIncome - 0.0) - total).toFixed(2)} </h2>
             </div>
         )
     }
